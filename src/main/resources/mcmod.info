@@ -1,0 +1,16 @@
+[
+{
+  "modid": "modid",
+  "name": "modname",
+  "description": "desc",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["CountryGamer"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["cgo"]
+}
+]
