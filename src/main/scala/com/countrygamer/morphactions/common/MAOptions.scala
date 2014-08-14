@@ -1,5 +1,6 @@
 package com.countrygamer.morphactions.common
 
+import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.cgo.wrapper.common.registries.OptionRegister
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.relauncher.SideOnly
@@ -20,7 +21,9 @@ object MAOptions extends OptionRegister() {
 	}
 
 	override def register(): Unit = {
-
+		if (this.config == null) {
+			LogHelper.info(MorphActions.pluginName, "ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		}
 	}
 
 	@SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
