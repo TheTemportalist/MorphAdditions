@@ -25,7 +25,7 @@ object MorphActions extends PluginWrapper {
 
 	@Mod.EventHandler
 	def preInit(event: FMLPreInitializationEvent): Unit = {
-		super.preInitialize(this.pluginID, this.pluginName, event, this.proxy)
+		super.preInitialize(this.pluginID, this.pluginName, event, this.proxy, MAOptions)
 
 	}
 
