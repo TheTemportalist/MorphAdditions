@@ -23,7 +23,7 @@ object MAOptions extends OptionRegister() {
 
 	}
 
-	@SideOnly {val value = cpw.mods.fml.relauncher.Side.CLIENT}
+	@SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	override def getGuiConfigClass: Class[_ <: net.minecraft.client.gui.GuiScreen] = {
 		classOf[com.countrygamer.morphactions.client.gui.configFactory.GuiConfig]
 	}
