@@ -11,11 +11,22 @@ import net.minecraft.entity.player.EntityPlayer
  */
 class AbilityTeleport() extends AbilityAction() {
 
+	private var reachLength: Double = 0.0D
+
 	override def trigger(player: EntityPlayer): Unit = {
-		UtilVector.teleportVector(player.worldObj, player, 500D)
+		UtilVector.teleportVector(player.worldObj, player, reachLength)
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
+
+		try {
+			this.reachLength = args(0).toDouble
+		}
+		catch {
+			case e: NumberFormatException =>
+				e.printStackTrace()
+		}
+
 		this
 	}
 

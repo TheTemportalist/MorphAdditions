@@ -5,6 +5,8 @@ import com.countrygamer.cgo.wrapper.common.PluginWrapper
 import com.countrygamer.morphactions.client.KeyHandler
 import com.countrygamer.morphactions.common.network.PacketKeyPressed
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.TickEvent
 import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
 import cpw.mods.fml.relauncher.Side
 
@@ -34,6 +36,8 @@ object MorphActions extends PluginWrapper {
 		RegisterHelper.registerExtendedPlayer("morphedPlayer", classOf[MorphedPlayer],
 			deathPersistance = true)
 
+		RegisterHelper.registerHandler(this, null)
+
 		RegisterHelper.registerPacketHandler(this.pluginID, classOf[PacketKeyPressed])
 
 		if (event.getSide == Side.CLIENT) {
@@ -51,6 +55,12 @@ object MorphActions extends PluginWrapper {
 	@Mod.EventHandler
 	def postInit(event: FMLPostInitializationEvent): Unit = {
 		super.postInitialize(event)
+
+	}
+
+	@SubscribeEvent
+	def tickingPlayer(event: TickEvent.PlayerTickEvent): Unit = {
+		val mPlayer: MorphedPlayer = MAOptions.getMP(event.player)
 
 	}
 

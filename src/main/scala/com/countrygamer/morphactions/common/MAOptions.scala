@@ -3,12 +3,14 @@ package com.countrygamer.morphactions.common
 import java.io.{File, FileReader}
 import java.nio.charset.Charset
 
+import com.countrygamer.cgo.common.lib.JsonHelper
+import com.countrygamer.cgo.wrapper.common.extended.ExtendedEntityHandler
 import com.countrygamer.cgo.wrapper.common.registries.OptionRegister
-import com.countrygamer.morphactions.common.lib.JsonHelper
 import com.google.gson._
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.relauncher.SideOnly
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
 
 /**
  *
@@ -16,6 +18,11 @@ import net.minecraft.entity.EntityLivingBase
  * @author CountryGamer
  */
 object MAOptions extends OptionRegister() {
+
+	def getMP(player: EntityPlayer): MorphedPlayer = {
+		ExtendedEntityHandler.getExtended(player, classOf[MorphedPlayer])
+				.asInstanceOf[MorphedPlayer]
+	}
 
 	private final val GSON: Gson = new Gson
 	private final val JSONPARSER: JsonParser = new JsonParser
