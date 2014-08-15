@@ -37,7 +37,6 @@ object MAOptions extends OptionRegister() {
 						File(this.getConfigDirectory(event.getModConfigurationDirectory),
 							"MapAbilities.json")
 		if (!mapAbilities.exists()) {
-			val jsonObject: JsonObject = this.getDefaultAbilities()
 			val formattedString: String = JsonHelper
 					.toReadableString(GSON.toJson(this.getDefaultAbilities()))
 			try {
@@ -76,7 +75,7 @@ object MAOptions extends OptionRegister() {
 				}
 				catch {
 					case e: ClassCastException =>
-
+						e.printStackTrace()
 				}
 			}
 

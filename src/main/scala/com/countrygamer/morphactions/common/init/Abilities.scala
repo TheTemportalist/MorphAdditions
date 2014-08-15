@@ -71,12 +71,16 @@ object Abilities {
 	def getAbility(entity: EntityLivingBase): AbilityAction = {
 		var ability: AbilityAction = null
 		var entityClass: Class[_] = entity.getClass
-		while (ability == null && entityClass != classOf[EntityLivingBase]) {
-			entityClass = entityClass.getSuperclass
+		do {
 			if (this.entityToAbility.containsKey(entityClass)) {
 				ability = this.entityToAbility.get(entityClass)
 			}
+			else {
+				entityClass = entityClass.getSuperclass
+			}
 		}
+		while (ability == null && entityClass != classOf[EntityLivingBase])
+
 		ability
 	}
 

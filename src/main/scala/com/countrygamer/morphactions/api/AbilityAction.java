@@ -1,5 +1,7 @@
 package com.countrygamer.morphactions.api;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 /**
  * @author CountryGamer
  */
@@ -9,7 +11,7 @@ public abstract class AbilityAction {
 
 	}
 
-	public abstract void trigger();
+	public abstract void trigger(EntityPlayer player);
 
 	private String[] args = null;
 

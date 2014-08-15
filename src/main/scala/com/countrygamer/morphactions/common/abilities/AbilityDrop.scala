@@ -1,6 +1,7 @@
 package com.countrygamer.morphactions.common.abilities
 
 import com.countrygamer.morphactions.api.AbilityAction
+import net.minecraft.entity.player.EntityPlayer
 
 /**
  *
@@ -9,11 +10,12 @@ import com.countrygamer.morphactions.api.AbilityAction
  */
 class AbilityDrop() extends AbilityAction() {
 
-	override def trigger(): Unit = {
+	override def trigger(player: EntityPlayer): Unit = {
 
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
+
 		this
 	}
 

@@ -37,8 +37,6 @@ object KeyHandler {
 		if (this.triggerKey_Key.isPressed) {
 			val packet: AbstractPacket = new PacketKeyPressed()
 			PacketHandler.sendToServer(MorphActions.pluginID, packet)
-			PacketHandler
-					.sendToPlayer(MorphActions.pluginID, packet, Minecraft.getMinecraft.thePlayer)
 		}
 
 	}

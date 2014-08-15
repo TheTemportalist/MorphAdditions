@@ -1,8 +1,12 @@
 package com.countrygamer.morphactions.common
 
+import com.countrygamer.cgo.common.RegisterHelper
 import com.countrygamer.cgo.wrapper.common.PluginWrapper
+import com.countrygamer.morphactions.client.KeyHandler
+import com.countrygamer.morphactions.common.network.PacketKeyPressed
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
-import cpw.mods.fml.common.{Mod, SidedProxy}
+import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
+import cpw.mods.fml.relauncher.Side
 
 /**
  *
@@ -26,6 +30,15 @@ object MorphActions extends PluginWrapper {
 	@Mod.EventHandler
 	def preInit(event: FMLPreInitializationEvent): Unit = {
 		super.preInitialize(this.pluginID, this.pluginName, event, this.proxy, MAOptions)
+
+		RegisterHelper.registerExtendedPlayer("morphedPlayer", classOf[MorphedPlayer],
+			deathPersistance = true)
+
+		RegisterHelper.registerPacketHandler(this.pluginID, classOf[PacketKeyPressed])
+
+		if (event.getSide == Side.CLIENT) {
+			FMLCommonHandler.instance().bus().register(KeyHandler)
+		}
 
 	}
 

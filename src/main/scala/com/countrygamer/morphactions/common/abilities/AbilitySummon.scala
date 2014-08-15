@@ -1,6 +1,7 @@
 package com.countrygamer.morphactions.common.abilities
 
 import com.countrygamer.morphactions.api.AbilityAction
+import net.minecraft.entity.player.EntityPlayer
 
 /**
  *
@@ -9,7 +10,7 @@ import com.countrygamer.morphactions.api.AbilityAction
  */
 class AbilitySummon() extends AbilityAction() {
 
-	override def trigger(): Unit = {
+	override def trigger(player: EntityPlayer): Unit = {
 
 	}
 

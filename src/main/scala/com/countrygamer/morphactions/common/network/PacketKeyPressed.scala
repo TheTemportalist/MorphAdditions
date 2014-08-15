@@ -36,8 +36,9 @@ class PacketKeyPressed() extends AbstractPacket {
 
 		if (entity != null) {
 			val ability: AbilityAction = Abilities.getAbility(entity)
-			if (ability != null)
-				ability.copy().trigger()
+			if (ability != null) {
+				ability.copy().trigger(player)
+			}
 		}
 
 	}
