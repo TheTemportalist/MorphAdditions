@@ -14,7 +14,7 @@ class AbilityTeleport() extends AbilityAction() {
 	private var reachLength: Double = 0.0D
 
 	override def trigger(player: EntityPlayer): Unit = {
-		UtilVector.teleportVector(player.worldObj, player, reachLength)
+		UtilVector.teleportVector(player.worldObj, player, this.reachLength)
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {

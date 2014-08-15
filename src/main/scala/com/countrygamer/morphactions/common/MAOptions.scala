@@ -92,7 +92,7 @@ object MAOptions extends OptionRegister() {
 
 	private def getDefaultAbilities(): JsonObject = {
 		val jsonObject: JsonObject = new JsonObject
-
+		/*
 		jsonObject.addProperty(
 			"net.minecraft.entity.passive.EntityChicken",
 			"drop|net.minecraft.item.ItemEgg,6000,12000")
@@ -105,14 +105,17 @@ object MAOptions extends OptionRegister() {
 			"net.minecraft.entity.monster.EntityBlaze",
 			"eject|net.minecraft.entity.projectile.EntitySmallFireball")
 
+		*/
+
 		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntityCreeper",
 			"explode|3F")
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntityEnderman",
-			"teleport")
+			"teleport|500.0D")
 
+		/*
 		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntityGhast",
 			"eject|net.minecraft.entity.projectile.EntityLargeFireball")
@@ -140,7 +143,7 @@ object MAOptions extends OptionRegister() {
 		jsonObject.addProperty(
 			"net.minecraft.entity.passive.EntityVillager",
 			"summon|")
-
+		*/
 		jsonObject
 	}
 

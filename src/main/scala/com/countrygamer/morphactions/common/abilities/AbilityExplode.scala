@@ -20,8 +20,12 @@ class AbilityExplode() extends AbilityAction() {
 			player.worldObj.createExplosion(player, player.posX, player.posY, player.posZ,
 				this.explosionRadius, canDestroyBlocks)
 
-			player.setDead()
+			if (!player.capabilities.isCreativeMode && !player.capabilities.disableDamage) {
+				player.setHealth(0.0F)
+			}
+
 		}
+
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
@@ -38,7 +42,7 @@ class AbilityExplode() extends AbilityAction() {
 	}
 
 	override def copy(): AbilityAction = {
-		new AbilityDrop().parse(this.getArgs())
+		new AbilityExplode().parse(this.getArgs())
 	}
 
 }
