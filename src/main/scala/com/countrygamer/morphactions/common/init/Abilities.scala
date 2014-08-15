@@ -27,7 +27,7 @@ object Abilities {
 		horse
 		iron golem
 		mooshroom cow
-		ocelot  -   scare creeper
+		ocelot
 		pig
 		sheep
 		squid
@@ -53,10 +53,10 @@ object Abilities {
 		NPC -   call iron golem
 		*/
 		registerAbility("drop", classOf[AbilityDrop])
-		registerAbility("scare", classOf[AbilityScare])
 		registerAbility("summon", classOf[AbilitySummon])
 		registerAbility("eject", classOf[AbilityEject])
 		registerAbility("explode", classOf[AbilityExplode])
+		registerAbility("teleport", classOf[AbilityTeleport])
 
 	}
 

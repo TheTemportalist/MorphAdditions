@@ -7,7 +7,7 @@ import com.countrygamer.morphactions.api.AbilityAction
  *
  * @author CountryGamer
  */
-class AbilityScare() extends AbilityAction() {
+class AbilityTeleport() extends AbilityAction() {
 
 	override def trigger(): Unit = {
 
@@ -18,7 +18,7 @@ class AbilityScare() extends AbilityAction() {
 	}
 
 	override def copy(): AbilityAction = {
-		new AbilityScare().parse(this.getArgs())
+		new AbilityTeleport().parse(this.getArgs())
 	}
 
 }

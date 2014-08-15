@@ -26,21 +26,38 @@ object ApiHelper {
 			Abilities.getAbilityByNameAndPars(name, new Array[String](0)))
 	}
 
+	def mapAbilityByParameters(entityClass: Class[_ <: EntityLivingBase],
+			nameAndPars: String): Unit = {
+		ApiHelper.mapAbilityByParameters(entityClass, nameAndPars, '|', ',')
+	}
+
 	def mapAbilityByParameters(entityClass: Class[_ <: EntityLivingBase], nameAndPars: String,
 			nameAndParSeparator: Char, parSeparator: Char): Unit = {
-		val nameAndPars_Array: Array[String] = nameAndPars.split(nameAndParSeparator)
-		val args: String = nameAndPars_Array(1)
-		val name: String = nameAndPars_Array(0)
+		var name: String = ""
 		val pars: util.ArrayList[String] = new util.ArrayList[String]()
+		if (nameAndPars.contains(nameAndParSeparator)) {
+			val nameAndPars_Array: Array[String] = nameAndPars.split(nameAndParSeparator)
+			name = nameAndPars_Array(0)
 
-		if (args.contains(parSeparator)) {
-			val parArray: Array[String] = args.split(parSeparator)
-			for (i <- 0 until parArray.length) {
-				pars.add(parArray(i).trim)
+			if (nameAndPars_Array.length > 1) {
+
+				val args: String = nameAndPars_Array(1)
+
+				if (args.contains(parSeparator)) {
+					val parArray: Array[String] = args.split(parSeparator)
+					for (i <- 0 until parArray.length) {
+						pars.add(parArray(i).trim)
+					}
+				}
+				else {
+					pars.add(args.trim)
+				}
+
 			}
+
 		}
 		else {
-			pars.add(args.trim)
+			name = nameAndPars
 		}
 
 		Abilities.setMapping(entityClass,
