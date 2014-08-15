@@ -2,6 +2,7 @@ package com.countrygamer.morphactions.common.abilities
 
 import com.countrygamer.morphactions.api.AbilityAction
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 
 /**
@@ -13,8 +14,12 @@ abstract class AbilityEject() extends AbilityAction() {
 
 	protected var entityClass: Class[_ <: Entity] = null
 
-	def getEntity(world: World): Entity = {
-		this.entityClass.getConstructor(classOf[World]).newInstance(world)
+	def getEntity(player: EntityPlayer): Entity = {
+		this.entityClass.getConstructor(classOf[World]).newInstance(player.worldObj)
+	}
+
+	override def trigger(player: EntityPlayer): Unit = {
+		player.worldObj.spawnEntityInWorld(this.getEntity(player))
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {

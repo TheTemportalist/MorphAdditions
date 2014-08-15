@@ -1,9 +1,10 @@
 package com.countrygamer.morphactions.common.abilities
 
-import com.countrygamer.cgo.common.lib.{ItemMeta, ItemMetaHelper, NameParser}
+import com.countrygamer.cgo.common.lib.NameParser
+import com.countrygamer.cgo.common.lib.util.UtilDrops
 import com.countrygamer.morphactions.api.AbilityAction
-import com.countrygamer.morphactions.common.{MAOptions, MorphedPlayer}
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 
 /**
  *
@@ -12,23 +13,19 @@ import net.minecraft.entity.player.EntityPlayer
  */
 class AbilityDrop() extends AbilityAction() {
 
-	private var itemMeta: ItemMeta = null
+	private var itemStack: ItemStack = null
 	private var minTicks: Int = 0
 	private var maxTicks: Int = 0
 
 	override def trigger(player: EntityPlayer): Unit = {
-		val mPlayer: MorphedPlayer = MAOptions.getMP(player)
-		val ticksTillNextDrop: Int = mPlayer.getTag("drop").getInteger("ticksTillNextDrop")
-		if (ticksTillNextDrop <= 0) {
-
-		}
-		else {
-
+		if (!player.worldObj.isRemote) {
+			UtilDrops.spawnItemStack(player.worldObj, player.posX, player.posY, player.posZ,
+				this.itemStack, player.worldObj.rand, 10)
 		}
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
-		this.itemMeta = ItemMetaHelper.getFromStack(NameParser.getItemStack(args(0)))
+		this.itemStack = NameParser.getItemStack(args(0))
 		try {
 			this.minTicks = Integer.parseInt(args(1))
 			this.maxTicks = Integer.parseInt(args(2))
