@@ -45,8 +45,8 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-group= "com.countrygamer.morphactions"
-archivesBaseName = "MorphActions"
+group= "com.countrygamer.morphadditions"
+archivesBaseName = "MorphAdditions"
 
 dependencies {
     compile("com.countrygamer.cgo:CGOrigin:${config.minecraft_version}-3+:dev")
@@ -63,7 +63,7 @@ minecraft {
     runDir = "${config.assets_path}"
 
     replace "@PLUGIN_VERSION@", project.version
-    replaceIn "MorphActions.java"
+    replaceIn "MorphAdditions.java"
 }
 
 version = "${config.minecraft_version}-$version"
@@ -122,24 +122,24 @@ uploadArchives {
                     project {
                         name project.archivesBaseName
                         packaging 'jar'
-                        description 'MorphActions'
-                        url 'https://github.com/TheCountryGamer/MorphActions'
+                        description 'MorphAdditions'
+                        url 'https://github.com/TheCountryGamer/MorphAdditions'
 
                         scm {
-                            url 'https://github.com/TheCountryGamer/MorphActions'
-                            connection 'scm:git:git://github.com/TheCountryGamer/MorphActions.git'
-                            developerConnection 'scm:git:git@github.com:TheCountryGamer/MorphActions.git'
+                            url 'https://github.com/TheCountryGamer/MorphAdditions'
+                            connection 'scm:git:git://github.com/TheCountryGamer/MorphAdditions.git'
+                            developerConnection 'scm:git:git@github.com:TheCountryGamer/MorphAdditions.git'
                         }
 
                         issueManagement {
                             system 'github'
-                            url 'https://github.com/TheCountryGamer/MorphActions/issues'
+                            url 'https://github.com/TheCountryGamer/MorphAdditions/issues'
                         }
 
                         licenses  {
                             license  {
                                 name 'Apache License Version 2.0'
-                                url 'https://github.com/TheCountryGamer/MorphActions/blob/master/LICENSE'
+                                url 'https://github.com/TheCountryGamer/MorphAdditions/blob/master/LICENSE'
                                 distribution 'repo'
                             }
                         }

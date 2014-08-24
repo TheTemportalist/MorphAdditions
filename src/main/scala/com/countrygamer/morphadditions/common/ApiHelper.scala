@@ -1,9 +1,9 @@
-package com.countrygamer.morphactions.common
+package com.countrygamer.morphadditions.common
 
 import java.util
 
-import com.countrygamer.morphactions.api.AbilityAction
-import com.countrygamer.morphactions.common.init.Abilities
+import com.countrygamer.morphadditions.api.AbilityAction
+import com.countrygamer.morphadditions.common.init.Abilities
 import net.minecraft.entity.EntityLivingBase
 
 /**

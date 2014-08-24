@@ -1,6 +1,6 @@
-package com.countrygamer.morphactions.client
+package com.countrygamer.morphadditions.client
 
-import com.countrygamer.morphactions.common.CommonProxy
+import com.countrygamer.morphadditions.common.CommonProxy
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 

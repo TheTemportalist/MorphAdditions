@@ -1,7 +1,7 @@
-package com.countrygamer.morphactions.client.gui.configFactory
+package com.countrygamer.morphadditions.client.gui.configFactory
 
 import com.countrygamer.cgo.wrapper.client.gui.configFactory.GuiFactoryWrapper
-import com.countrygamer.morphactions.common.MAOptions
+import com.countrygamer.morphadditions.common.MAOptions
 
 /**
  *

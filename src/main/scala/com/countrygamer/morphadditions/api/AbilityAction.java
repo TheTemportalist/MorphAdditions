@@ -1,4 +1,4 @@
-package com.countrygamer.morphactions.api;
+package com.countrygamer.morphadditions.api;
 
 import net.minecraft.entity.player.EntityPlayer;
 

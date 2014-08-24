@@ -1,8 +1,8 @@
 [
 {
-  "modid": "morphactions",
-  "name": "MorphActions",
-  "description": "MorphActions' intention is to create abilities for morphed players to trigger, up until the time comes when Morph inherently provides this functionality.",
+  "modid": "morphadditions",
+  "name": "MorphAdditions",
+  "description": "MorphAdditions' intention is to create abilities for morphed players to trigger, up until the time comes when Morph inherently provides this functionality.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

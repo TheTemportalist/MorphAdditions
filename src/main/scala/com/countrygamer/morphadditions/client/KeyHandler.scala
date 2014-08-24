@@ -1,9 +1,9 @@
-package com.countrygamer.morphactions.client
+package com.countrygamer.morphadditions.client
 
 import com.countrygamer.cgo.common.network.PacketHandler
 import com.countrygamer.cgo.wrapper.common.network.AbstractPacket
-import com.countrygamer.morphactions.common.MorphActions
-import com.countrygamer.morphactions.common.network.PacketKeyPressed
+import com.countrygamer.morphadditions.common.MorphAdditions
+import com.countrygamer.morphadditions.common.network.PacketKeyPressed
 import cpw.mods.fml.client.registry.ClientRegistry
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
@@ -36,7 +36,7 @@ object KeyHandler {
 
 		if (this.triggerKey_Key.isPressed) {
 			val packet: AbstractPacket = new PacketKeyPressed()
-			PacketHandler.sendToServer(MorphActions.pluginID, packet)
+			PacketHandler.sendToServer(MorphAdditions.pluginID, packet)
 		}
 
 	}

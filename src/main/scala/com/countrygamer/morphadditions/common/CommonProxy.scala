@@ -1,4 +1,4 @@
-package com.countrygamer.morphactions.common
+package com.countrygamer.morphadditions.common
 
 import com.countrygamer.cgo.wrapper.common.ProxyWrapper
 import net.minecraft.entity.player.EntityPlayer

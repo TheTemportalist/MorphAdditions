@@ -1,4 +1,4 @@
-package com.countrygamer.morphactions.common
+package com.countrygamer.morphadditions.common
 
 import java.io.{File, FileReader}
 import java.nio.charset.Charset
@@ -159,7 +159,7 @@ object MAOptions extends OptionRegister() {
 
 	@SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
 	override def getGuiConfigClass: Class[_ <: net.minecraft.client.gui.GuiScreen] = {
-		classOf[com.countrygamer.morphactions.client.gui.configFactory.GuiConfig]
+		classOf[com.countrygamer.morphadditions.client.gui.configFactory.GuiConfig]
 	}
 
 }

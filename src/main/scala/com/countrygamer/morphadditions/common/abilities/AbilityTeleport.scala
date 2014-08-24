@@ -1,7 +1,7 @@
-package com.countrygamer.morphactions.common.abilities
+package com.countrygamer.morphadditions.common.abilities
 
 import com.countrygamer.cgo.common.lib.util.UtilVector
-import com.countrygamer.morphactions.api.AbilityAction
+import com.countrygamer.morphadditions.api.AbilityAction
 import net.minecraft.entity.player.EntityPlayer
 
 /**

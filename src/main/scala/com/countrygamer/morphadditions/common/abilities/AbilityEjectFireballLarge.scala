@@ -1,9 +1,9 @@
-package com.countrygamer.morphactions.common.abilities
+package com.countrygamer.morphadditions.common.abilities
 
 import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.cgo.common.lib.util.Cursor
-import com.countrygamer.morphactions.api.AbilityAction
-import com.countrygamer.morphactions.common.MorphActions
+import com.countrygamer.morphadditions.api.AbilityAction
+import com.countrygamer.morphadditions.common.MorphAdditions
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -41,11 +41,11 @@ class AbilityEjectFireballLarge() extends AbilityEjectFireball() {
 				val mop: MovingObjectPosition = Cursor
 						.getMOPFromPlayer(player.worldObj, player, 10D)
 				if (mop != null) {
-					LogHelper.info(MorphActions.pluginName,
+					LogHelper.info(MorphAdditions.pluginName,
 						"Pos'\n" + mop.hitVec.xCoord + "\n" + mop.hitVec.yCoord + "\n" +
 								mop.hitVec.zCoord
 					)
-					LogHelper.info(MorphActions.pluginName,
+					LogHelper.info(MorphAdditions.pluginName,
 						"Block\n" + mop.blockX + "\n" + mop.blockY + "\n" + mop.blockZ
 					)
 					player.worldObj.setBlock(mop.blockX, mop.blockY, mop.blockZ, Blocks.stone)

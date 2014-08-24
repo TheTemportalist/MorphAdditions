@@ -1,4 +1,4 @@
-package com.countrygamer.morphactions.common
+package com.countrygamer.morphadditions.common
 
 import java.util
 

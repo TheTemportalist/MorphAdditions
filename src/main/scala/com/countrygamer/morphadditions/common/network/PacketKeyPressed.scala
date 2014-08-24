@@ -1,8 +1,8 @@
-package com.countrygamer.morphactions.common.network
+package com.countrygamer.morphadditions.common.network
 
 import com.countrygamer.cgo.wrapper.common.network.AbstractPacket
-import com.countrygamer.morphactions.api.AbilityAction
-import com.countrygamer.morphactions.common.init.Abilities
+import com.countrygamer.morphadditions.api.AbilityAction
+import com.countrygamer.morphadditions.common.init.Abilities
 import io.netty.buffer.ByteBuf
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
