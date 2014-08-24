@@ -19,7 +19,8 @@ abstract class AbilityEject() extends AbilityAction() {
 	}
 
 	override def trigger(player: EntityPlayer): Unit = {
-		player.worldObj.spawnEntityInWorld(this.getEntity(player))
+		this.getEntity(player)
+		//player.worldObj.spawnEntityInWorld(this.getEntity(player))
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {

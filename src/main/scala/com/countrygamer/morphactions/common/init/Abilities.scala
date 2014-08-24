@@ -54,9 +54,9 @@ object Abilities {
 		*/
 		registerAbility("drop", classOf[AbilityDrop])
 		registerAbility("summon", classOf[AbilitySummon])
-		registerAbility("eject", classOf[AbilityEject])
 		registerAbility("explode", classOf[AbilityExplode])
 		registerAbility("teleport", classOf[AbilityTeleport])
+		registerAbility("ejectFireball", classOf[AbilityEjectFireball])
 
 	}
 
