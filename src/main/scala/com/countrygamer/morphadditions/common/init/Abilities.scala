@@ -56,7 +56,8 @@ object Abilities {
 		registerAbility("summon", classOf[AbilitySummon])
 		registerAbility("explode", classOf[AbilityExplode])
 		registerAbility("teleport", classOf[AbilityTeleport])
-		registerAbility("ejectFireball", classOf[AbilityEjectFireball])
+		registerAbility("ejectLargeFireball", classOf[AbilityEjectFireballLarge])
+		registerAbility("ejectSmallFireball", classOf[AbilityEjectFireballSmall])
 
 	}
 

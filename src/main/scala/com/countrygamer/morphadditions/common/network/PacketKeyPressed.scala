@@ -1,7 +1,9 @@
 package com.countrygamer.morphadditions.common.network
 
+import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.cgo.wrapper.common.network.AbstractPacket
 import com.countrygamer.morphadditions.api.AbilityAction
+import com.countrygamer.morphadditions.common.MorphAdditions
 import com.countrygamer.morphadditions.common.init.Abilities
 import io.netty.buffer.ByteBuf
 import net.minecraft.entity.EntityLivingBase

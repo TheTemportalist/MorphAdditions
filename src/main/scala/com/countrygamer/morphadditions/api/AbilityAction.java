@@ -2,6 +2,8 @@ package com.countrygamer.morphadditions.api;
 
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * @author CountryGamer
  */
@@ -15,7 +17,30 @@ public abstract class AbilityAction {
 
 	private String[] args = null;
 
-	public abstract AbilityAction copy();
+	public AbilityAction copy() {
+		AbilityAction ability = null;
+		try {
+			ability = this.getClass().getConstructor().newInstance();
+		}
+		catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		catch (InstantiationException e) {
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
+		if (ability != null) {
+			ability.parse(this.getArgs());
+		}
+
+		return ability;
+	}
 
 	public void setArgs(String[] args) {
 		this.args = args;

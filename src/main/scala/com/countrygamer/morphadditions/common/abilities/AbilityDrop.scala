@@ -38,8 +38,4 @@ class AbilityDrop() extends AbilityAction() {
 		this
 	}
 
-	override def copy(): AbilityAction = {
-		new AbilityDrop().parse(this.getArgs())
-	}
-
 }

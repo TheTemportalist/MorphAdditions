@@ -94,9 +94,13 @@ object MAOptions extends OptionRegister() {
 		val jsonObject: JsonObject = new JsonObject
 
 		jsonObject.addProperty(
-			"net.minecraft.entity.passive.EntityVillager",
-			"ejectFireball|large,1"
+			"net.minecraft.entity.monster.EntityGhast",
+			"ejectLargeFireball|100.0D,1"
 		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.monster.EntityBlaze",
+			"ejectSmallFireball|100.0D")
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.passive.EntityChicken",
@@ -107,9 +111,7 @@ object MAOptions extends OptionRegister() {
 		// "net.minecraft.entity.passive.EntityWolf",
 		//	"summon|net.minecraft.entity.passive.EntityWolf")
 
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntityBlaze",
-			"eject|net.minecraft.entity.projectile.EntitySmallFireball")
+
 
 		*/
 
