@@ -8,5 +8,5 @@ import com.countrygamer.morphadditions.common.MAOptions
  *
  * @author CountryGamer
  */
-class MorphActionsFactory() extends GuiFactoryWrapper(MAOptions) {
+class GuiFactory() extends GuiFactoryWrapper(MAOptions) {
 }

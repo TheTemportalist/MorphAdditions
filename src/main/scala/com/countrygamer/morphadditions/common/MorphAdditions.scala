@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side
  * @author CountryGamer
  */
 @Mod(modid = MorphAdditions.pluginID, name = MorphAdditions.pluginName, version = "@PLUGIN_VERSION@",
-	guiFactory = "com.countrygamer.morphadditions.client.gui.configFactory.MorphActionsFactory",
+	guiFactory = "com.countrygamer.morphadditions.client.gui.configFactory.GuiFactory",
 	modLanguage = "scala",
 	dependencies = "required-after:Forge@[10.13,);required-after:cgo@[3,);required-after:Morph@[0.9.0,);"
 )
