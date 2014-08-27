@@ -23,4 +23,14 @@ class CommonProxy() extends ProxyWrapper {
 		null
 	}
 
+	def tickPlayer(player: MorphedPlayer): Unit = {
+		player.tick()
+		if (player.getCooldown() < 0)
+			this.syncPlayer(player)
+	}
+
+	def syncPlayer(player: MorphedPlayer): Unit = {
+		player.syncEntity()
+	}
+
 }

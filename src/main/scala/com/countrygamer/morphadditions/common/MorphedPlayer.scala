@@ -57,8 +57,6 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	def tick(): Unit = {
 		if (this.cooldownTicks >= 0) {
 			this.cooldownTicks = this.cooldownTicks - 1
-			if (this.cooldownTicks < 0 && FMLCommonHandler.instance().getEffectiveSide.isServer)
-				this.syncEntity()
 			this.printCooldown("")
 			//this.syncEntity()
 		}

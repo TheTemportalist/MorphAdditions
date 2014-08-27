@@ -1,7 +1,7 @@
 package com.countrygamer.morphadditions.client
 
 import com.countrygamer.morphadditions.client.gui.HUDOverlay
-import com.countrygamer.morphadditions.common.CommonProxy
+import com.countrygamer.morphadditions.common.{CommonProxy, MorphedPlayer}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
@@ -22,5 +22,7 @@ class ClientProxy() extends CommonProxy() {
 			z: Int): AnyRef = {
 		null
 	}
+
+	override def syncPlayer(player: MorphedPlayer): Unit = {}
 
 }

@@ -61,8 +61,7 @@ object MorphAdditions extends PluginWrapper {
 
 	@SubscribeEvent
 	def tickingPlayer(event: TickEvent.PlayerTickEvent): Unit = {
-		val mPlayer: MorphedPlayer = MAOptions.getMP(event.player)
-		mPlayer.tick()
+		this.proxy.tickPlayer(MAOptions.getMP(event.player))
 	}
 
 }
