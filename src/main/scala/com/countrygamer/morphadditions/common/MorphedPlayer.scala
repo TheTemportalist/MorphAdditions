@@ -42,11 +42,10 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	def trigger(entity: EntityLivingBase, ability: AbilityAction): Unit = {
 		if (this.canTrigger() && !MinecraftForge.EVENT_BUS
 				.post(new MorphActionEvent(this.player, entity, ability))) {
-			//ability.copy().trigger(this.player)
+			ability.copy().trigger(this.player)
 
-			this.cooldownTicks = 20 * 60 //ability.getCooldown
+			this.cooldownTicks = ability.getCooldown
 			this.syncEntity()
-
 		}
 	}
 
@@ -57,7 +56,7 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	def tick(): Unit = {
 		if (this.cooldownTicks >= 0) {
 			this.cooldownTicks = this.cooldownTicks - 1
-			this.printCooldown("")
+			//this.printCooldown("")
 			//this.syncEntity()
 		}
 	}

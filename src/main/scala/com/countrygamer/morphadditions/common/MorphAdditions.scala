@@ -7,6 +7,7 @@ import com.countrygamer.morphadditions.common.network.PacketKeyPressed
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
+import cpw.mods.fml.common.gameevent.TickEvent.Phase
 import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
 import cpw.mods.fml.relauncher.Side
 
@@ -61,7 +62,8 @@ object MorphAdditions extends PluginWrapper {
 
 	@SubscribeEvent
 	def tickingPlayer(event: TickEvent.PlayerTickEvent): Unit = {
-		this.proxy.tickPlayer(MAOptions.getMP(event.player))
+		if (event.phase == Phase.START)
+			this.proxy.tickPlayer(MAOptions.getMP(event.player))
 	}
 
 }
