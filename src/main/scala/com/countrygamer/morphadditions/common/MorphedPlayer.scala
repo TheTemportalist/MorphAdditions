@@ -4,11 +4,13 @@ import java.util
 
 import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.cgo.wrapper.common.extended.ExtendedEntity
-import com.countrygamer.morphadditions.api.AbilityAction
+import com.countrygamer.morphadditions.api.{AbilityAction, MorphActionEvent}
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.relauncher.Side
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
+import net.minecraftforge.common.MinecraftForge
 
 /**
  *
@@ -37,8 +39,9 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 			new NBTTagCompound()
 	}
 
-	def trigger(ability: AbilityAction): Unit = {
-		if (this.canTrigger()) {
+	def trigger(entity: EntityLivingBase, ability: AbilityAction): Unit = {
+		if (this.canTrigger() && !MinecraftForge.EVENT_BUS
+				.post(new MorphActionEvent(this.player, entity, ability))) {
 			ability.copy().trigger(this.player)
 
 			this.cooldownTicks = ability.getCooldown

@@ -38,7 +38,7 @@ class PacketKeyPressed() extends AbstractPacket {
 		if (entity != null) {
 			val ability: AbilityAction = Abilities.getAbility(entity)
 			if (ability != null) {
-				MAOptions.getMP(player).trigger(ability)
+				MAOptions.getMP(player).trigger(entity, ability)
 			}
 		}
 
