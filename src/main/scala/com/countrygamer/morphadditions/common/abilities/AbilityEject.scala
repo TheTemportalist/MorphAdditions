@@ -66,8 +66,7 @@ abstract class AbilityEject() extends AbilityAction() {
 	}
 
 	def getTargetCoords(player: EntityPlayer): Array[Double] = {
-		val mop: MovingObjectPosition = Cursor
-				.getMOPFromPlayer(player.worldObj, player, this.targetRadius)
+		val mop: MovingObjectPosition = Cursor.rayTrace(player, this.targetRadius)
 
 		if (mop == null)
 			return null
