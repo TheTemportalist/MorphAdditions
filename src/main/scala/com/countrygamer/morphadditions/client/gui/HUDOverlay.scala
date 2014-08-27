@@ -1,5 +1,6 @@
 package com.countrygamer.morphadditions.client.gui
 
+import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.morphadditions.common.{MAOptions, MorphAdditions, MorphedPlayer}
 import cpw.mods.fml.common.eventhandler.{EventPriority, SubscribeEvent}
 import net.minecraft.client.Minecraft
@@ -41,6 +42,7 @@ object HUDOverlay extends Gui() {
 			val timeLeft: String = mPlayer.getCooldownTime()
 			//val x1: Int = width / 2 - this.mc.fontRenderer.getStringWidth(timeLeft)
 			//val y1: Int = y + h + 1
+			LogHelper.info(MorphAdditions.pluginName, timeLeft)
 			val x1: Int = width / 4 + 15 - this.mc.fontRenderer.getStringWidth(timeLeft) - 2
 			val y1: Int = height - 37
 			this.mc.fontRenderer.drawString(timeLeft, x1, y1, 0x000000)

@@ -42,9 +42,9 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	def trigger(entity: EntityLivingBase, ability: AbilityAction): Unit = {
 		if (this.canTrigger() && !MinecraftForge.EVENT_BUS
 				.post(new MorphActionEvent(this.player, entity, ability))) {
-			ability.copy().trigger(this.player)
+			//ability.copy().trigger(this.player)
 
-			this.cooldownTicks = ability.getCooldown
+			this.cooldownTicks = 20 * 60 //ability.getCooldown
 			this.syncEntity()
 
 		}
@@ -57,7 +57,10 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	def tick(): Unit = {
 		if (this.cooldownTicks >= 0) {
 			this.cooldownTicks = this.cooldownTicks - 1
-			this.syncEntity()
+			if (this.cooldownTicks < 0 && FMLCommonHandler.instance().getEffectiveSide.isServer)
+				this.syncEntity()
+			this.printCooldown("")
+			//this.syncEntity()
 		}
 	}
 
@@ -66,6 +69,7 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	}
 
 	def getCooldownTime(): String = {
+		//this.printCooldown("")
 		val totalSeconds: Int = this.cooldownTicks / 20
 		val ticks: Int = this.cooldownTicks % 20
 		val minutes: Int = totalSeconds / 60
@@ -79,6 +83,8 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		while (ticks_str.length < 2) {
 			ticks_str = "0" + ticks_str
 		}
+
+		//this.printCooldown(minutes + ":" + seconds_str + ":" + ticks_str)
 
 		minutes + ":" + seconds_str + ":" + ticks_str
 	}
