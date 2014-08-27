@@ -4,6 +4,7 @@ import com.countrygamer.cgo.common.RegisterHelper
 import com.countrygamer.cgo.wrapper.common.PluginWrapper
 import com.countrygamer.morphadditions.client.KeyHandler
 import com.countrygamer.morphadditions.common.network.PacketKeyPressed
+import com.countrygamer.morphadditions.waila.Waila
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
@@ -57,6 +58,8 @@ object MorphAdditions extends PluginWrapper {
 	@Mod.EventHandler
 	def postInit(event: FMLPostInitializationEvent): Unit = {
 		super.postInitialize(event)
+
+		Waila.post()
 
 	}
 
