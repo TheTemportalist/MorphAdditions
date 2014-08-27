@@ -24,6 +24,8 @@ object MAOptions extends OptionRegister() {
 				.asInstanceOf[MorphedPlayer]
 	}
 
+	var HUD_ticks: Int = 100
+
 	private final val GSON: Gson = new Gson
 	private final val JSONPARSER: JsonParser = new JsonParser
 
@@ -94,69 +96,63 @@ object MAOptions extends OptionRegister() {
 		val jsonObject: JsonObject = new JsonObject
 
 		jsonObject.addProperty(
+			"net.minecraft.entity.passive.EntityChicken",
+			"drop|6000,12000|minecraft:egg:0")
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.passive.EntityWolf",
+			"summon|12000,24000|net.minecraft.entity.passive.EntityWolf,3,7"
+		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.monster.EntityZombie",
+			"summon|12000,24000|net.minecraft.entity.monster.EntityZombie,6,7"
+		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.monster.EntityPigZombie",
+			"summon|12000,24000|net.minecraft.entity.monster.EntityPigZombie,6,7"
+		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.monster.EntitySilverfish",
+			"summon|1200,6000|net.minecraft.entity.monster.EntitySilverfish,5,3"
+		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.passive.EntityVillager",
+			"summon|6000,12000|net.minecraft.entity.monster.EntityIronGolem,1,4"
+		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.monster.EntityCreeper",
+			"explode|3F"
+		)
+
+		jsonObject.addProperty(
+			"net.minecraft.entity.monster.EntityEnderman",
+			"teleport|300.0D"
+		)
+
+		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntityGhast",
-			"ejectLargeFireball|100.0D,1"
+			"ejectLargeFireball|60,200|64.0D,1"
 		)
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntityBlaze",
-			"ejectSmallFireball|100.0D")
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.passive.EntityChicken",
-			"drop|minecraft:egg:0,6000,12000")
-
-		/*
-		//jsonObject.addProperty(
-		// "net.minecraft.entity.passive.EntityWolf",
-		//	"summon|net.minecraft.entity.passive.EntityWolf")
-
-
-
-		*/
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntityCreeper",
-			"explode|3F")
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntityEnderman",
-			"teleport|500.0D")
-
-		/*
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntityGhast",
-			"eject|net.minecraft.entity.projectile.EntityLargeFireball")
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntitySilverfish",
-			"summon")
+			"ejectSmallFireball|16.0D"
+		)
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntitySnowman",
-			"eject|net.minecraft.entity.projectile.EntitySnowball")
+			"ejectSnowball|16.0D"
+		)
 
-		jsonObject.addProperty(
-			"net.minecraft.entity.boss.EntityWither",
-			"eject|net.minecraft.entity.projectile.EntityWitherSkull")
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntityZombie",
-			"summon|")
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.monster.EntityPigZombie",
-			"summon|")
-
-		jsonObject.addProperty(
-			"net.minecraft.entity.passive.EntityVillager",
-			"summon|")
-		*/
 		jsonObject
 	}
 
 	override def register(): Unit = {
-
 	}
 
 	@SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)

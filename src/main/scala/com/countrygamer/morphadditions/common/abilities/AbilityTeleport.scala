@@ -18,6 +18,7 @@ class AbilityTeleport() extends AbilityAction() {
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
+		super.parse(args)
 
 		try {
 			this.reachLength = args(0).toDouble
@@ -28,10 +29,6 @@ class AbilityTeleport() extends AbilityAction() {
 		}
 
 		this
-	}
-
-	override def copy(): AbilityAction = {
-		new AbilityTeleport().parse(this.getArgs())
 	}
 
 }

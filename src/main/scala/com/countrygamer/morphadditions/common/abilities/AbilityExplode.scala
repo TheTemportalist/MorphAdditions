@@ -35,10 +35,10 @@ class AbilityExplode() extends AbilityAction() {
 			}
 
 		}
-
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
+		super.parse(args)
 
 		try {
 			this.explosionRadius = args(0).toFloat
@@ -49,10 +49,6 @@ class AbilityExplode() extends AbilityAction() {
 		}
 
 		this
-	}
-
-	override def copy(): AbilityAction = {
-		new AbilityExplode().parse(this.getArgs())
 	}
 
 }

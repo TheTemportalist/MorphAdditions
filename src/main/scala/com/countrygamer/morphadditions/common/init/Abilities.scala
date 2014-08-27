@@ -58,6 +58,7 @@ object Abilities {
 		registerAbility("teleport", classOf[AbilityTeleport])
 		registerAbility("ejectLargeFireball", classOf[AbilityEjectFireballLarge])
 		registerAbility("ejectSmallFireball", classOf[AbilityEjectFireballSmall])
+		registerAbility("ejectSnowball", classOf[AbilityEjectSnowball])
 
 	}
 
@@ -90,7 +91,6 @@ object Abilities {
 		if (abilityClass != null) {
 			val ability: AbilityAction = abilityClass.getConstructor().newInstance()
 					.asInstanceOf[AbilityAction]
-			ability.setArgs(args)
 			ability.parse(args)
 			return ability
 		}

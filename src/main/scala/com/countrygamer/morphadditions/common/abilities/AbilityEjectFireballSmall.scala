@@ -18,7 +18,8 @@ class AbilityEjectFireballSmall() extends AbilityEjectFireball() {
 	override def getEntity(player: EntityPlayer): Entity = {
 		val entity: EntitySmallFireball = super.getEntity(player).asInstanceOf[EntitySmallFireball]
 
-		entity.posY = player.posY + (player.height / 2.0F).asInstanceOf[Double] + 0.5D
+		if (entity != null)
+			entity.posY = player.posY + (player.height / 2.0F).asInstanceOf[Double] + 0.5D
 
 		entity
 	}

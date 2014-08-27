@@ -5,6 +5,8 @@ import com.countrygamer.cgo.wrapper.common.PluginWrapper
 import com.countrygamer.morphadditions.client.KeyHandler
 import com.countrygamer.morphadditions.common.network.PacketKeyPressed
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.TickEvent
 import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
 import cpw.mods.fml.relauncher.Side
 
@@ -13,7 +15,8 @@ import cpw.mods.fml.relauncher.Side
  *
  * @author CountryGamer
  */
-@Mod(modid = MorphAdditions.pluginID, name = MorphAdditions.pluginName, version = "@PLUGIN_VERSION@",
+@Mod(modid = MorphAdditions.pluginID, name = MorphAdditions.pluginName,
+	version = "@PLUGIN_VERSION@",
 	guiFactory = "com.countrygamer.morphadditions.client.gui.configFactory.GuiFactory",
 	modLanguage = "scala",
 	dependencies = "required-after:Forge@[10.13,);required-after:cgo@[3,);required-after:Morph@[0.9.0,);"
@@ -56,12 +59,10 @@ object MorphAdditions extends PluginWrapper {
 
 	}
 
-	/*
 	@SubscribeEvent
 	def tickingPlayer(event: TickEvent.PlayerTickEvent): Unit = {
 		val mPlayer: MorphedPlayer = MAOptions.getMP(event.player)
-
+		mPlayer.tick()
 	}
-	*/
 
 }

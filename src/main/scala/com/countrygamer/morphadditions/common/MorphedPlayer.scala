@@ -2,7 +2,11 @@ package com.countrygamer.morphadditions.common
 
 import java.util
 
+import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.cgo.wrapper.common.extended.ExtendedEntity
+import com.countrygamer.morphadditions.api.AbilityAction
+import cpw.mods.fml.common.FMLCommonHandler
+import cpw.mods.fml.relauncher.Side
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 
@@ -15,6 +19,7 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 
 	private val data: util.HashMap[String, NBTTagCompound] = new
 					util.HashMap[String, NBTTagCompound]()
+	private var cooldownTicks: Int = 0
 
 	def updateTag(key: String, newTag: NBTTagCompound): Unit = {
 		this.data.put(key, newTag)
@@ -32,6 +37,54 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 			new NBTTagCompound()
 	}
 
+	def trigger(ability: AbilityAction): Unit = {
+		if (this.canTrigger()) {
+			ability.copy().trigger(this.player)
+
+			this.cooldownTicks = ability.getCooldown
+			this.syncEntity()
+
+		}
+	}
+
+	def canTrigger(): Boolean = {
+		this.player.capabilities.isCreativeMode || this.cooldownTicks < 0
+	}
+
+	def tick(): Unit = {
+		if (this.cooldownTicks >= 0) {
+			this.cooldownTicks = this.cooldownTicks - 1
+			this.syncEntity()
+		}
+	}
+
+	def getCooldown(): Int = {
+		this.cooldownTicks
+	}
+
+	def getCooldownTime(): String = {
+		val totalSeconds: Int = this.cooldownTicks / 20
+		val ticks: Int = this.cooldownTicks % 20
+		val minutes: Int = totalSeconds / 60
+		val seconds: Int = totalSeconds % 60
+
+		var seconds_str: String = seconds + ""
+		while (seconds_str.length < 2) {
+			seconds_str = "0" + seconds_str
+		}
+		var ticks_str: String = ticks + ""
+		while (ticks_str.length < 2) {
+			ticks_str = "0" + ticks_str
+		}
+
+		minutes + ":" + seconds_str + ":" + ticks_str
+	}
+
+	def clearCooldown(): Unit = {
+		this.cooldownTicks = -1
+		this.syncEntity()
+	}
+
 	override def saveNBTData(tagCom: NBTTagCompound): Unit = {
 		val morphedTagList: NBTTagList = new NBTTagList()
 		val iterator: util.Iterator[String] = this.data.keySet().iterator()
@@ -43,6 +96,10 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 			morphedTagList.appendTag(tag)
 		}
 		tagCom.setTag("morphedPlayerTag", morphedTagList)
+
+		//this.printCooldown("saving ticks")
+		tagCom.setInteger("cool_down", this.cooldownTicks)
+
 	}
 
 	override def loadNBTData(tagCom: NBTTagCompound): Unit = {
@@ -52,6 +109,19 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 			val tag: NBTTagCompound = morphedTagList.getCompoundTagAt(i)
 			this.data.put(tag.getString("key"), tag.getCompoundTag("value"))
 		}
+
+		this.cooldownTicks = tagCom.getInteger("cool_down")
+		//this.printCooldown("loaded ticks")
+
+	}
+
+	def getSide(): Side = {
+		FMLCommonHandler.instance().getEffectiveSide
+	}
+
+	def printCooldown(message: String): Unit = {
+		LogHelper.info(MorphAdditions.pluginName,
+			this.getSide() + " " + message + " " + this.cooldownTicks)
 	}
 
 }
