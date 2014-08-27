@@ -38,11 +38,6 @@ class PacketKeyPressed() extends AbstractPacket {
 		if (entity != null) {
 			val ability: AbilityAction = Abilities.getAbility(entity)
 			if (ability != null) {
-				// TODO DEBUG
-				if (player.isSneaking) {
-					MAOptions.getMP(player).clearCooldown()
-				}
-
 				MAOptions.getMP(player).trigger(ability)
 			}
 		}
