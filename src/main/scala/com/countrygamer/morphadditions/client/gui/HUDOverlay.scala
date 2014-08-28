@@ -3,6 +3,7 @@ package com.countrygamer.morphadditions.client.gui
 import com.countrygamer.cgo.common.lib.LogHelper
 import com.countrygamer.morphadditions.common.{MAOptions, MorphAdditions, MorphedPlayer}
 import cpw.mods.fml.common.eventhandler.{EventPriority, SubscribeEvent}
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.util.ResourceLocation
@@ -15,6 +16,7 @@ import org.lwjgl.opengl.GL11
  *
  * @author CountryGamer
  */
+@SideOnly(Side.CLIENT)
 object HUDOverlay extends Gui() {
 
 	private val mc: Minecraft = Minecraft.getMinecraft
