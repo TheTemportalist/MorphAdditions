@@ -45,14 +45,14 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-group= "com.countrygamer.morphadditions"
+group = "com.countrygamer.morphadditions"
 archivesBaseName = "MorphAdditions"
 
 dependencies {
     compile("com.countrygamer.cgo:CGOrigin:${config.minecraft_version}-3+:dev")
 }
 
-version = "0.0.1"
+version = "0.0.2"
 
 if (System.getenv().BUILD_NUMBER != null) {
     version = version + "_build-" + System.getenv().BUILD_NUMBER
@@ -69,24 +69,24 @@ minecraft {
 version = "${config.minecraft_version}-$version"
 
 processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version': project.version, 'mcversion': project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
@@ -95,7 +95,7 @@ task sourcesJar(type: Jar) {
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
-    from (sourceSets.main.allSource.srcDirs) {
+    from(sourceSets.main.allSource.srcDirs) {
         include '**/*.java'
         include '**/*.scala'
     }
@@ -136,8 +136,8 @@ uploadArchives {
                             url 'https://github.com/TheCountryGamer/MorphAdditions/issues'
                         }
 
-                        licenses  {
-                            license  {
+                        licenses {
+                            license {
                                 name 'Apache License Version 2.0'
                                 url 'https://github.com/TheCountryGamer/MorphAdditions/blob/master/LICENSE'
                                 distribution 'repo'
