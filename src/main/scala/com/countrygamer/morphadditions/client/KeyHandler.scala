@@ -25,7 +25,8 @@ object KeyHandler {
 	private var triggerKey_Key: KeyBinding = null
 
 	{
-		this.triggerKey_Key = new KeyBinding(this.triggerKey_Name, this.triggerKey_Int, "")
+		this.triggerKey_Key = new KeyBinding(this.triggerKey_Name, this.triggerKey_Int,
+			"key.categories.gameplay")
 		ClientRegistry.registerKeyBinding(this.triggerKey_Key)
 
 	}
