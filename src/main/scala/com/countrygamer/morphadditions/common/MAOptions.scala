@@ -90,6 +90,60 @@ object MAOptions extends OptionRegister() {
 
 		}
 
+		val mapHelper: File = new
+						File(this.getConfigDirectory(event.getModConfigurationDirectory),
+							"MappingHelp.txt")
+		if (!mapHelper.exists()) {
+			val text: String =
+				"MapAbilities.json Tutorial\n" +
+						"This is a short tutorial on the mappings and their format!\n" +
+						"Each entity can have ONLY 1 trigger-able ability (AbilityAction). " +
+						"Similar to Morph, the mappings are laid out like so in the config:\n\t" +
+						"EXAMPLE:  \'fullClassName\': \"\'abilityName\'|\'minimumCooldown\',\'" +
+						"maximumCooldown\'|\'arguments\'\n\n" +
+						"So here is the break down if that was not simple enough :P\n" +
+						"First, is the full class name. This is the KEY for the mapping, as is " +
+						"shown in json file format.\n" +
+						"EXAMPLE:\"net.minecraft.entity.passive.EntityPig\"\n" +
+						"The value, then, is primarily the abilities mapped name. All inherent " +
+						"abilities can be found in the default generated file.\n" +
+						"After the name, is the minimum and maximum cooldown times. ¡!IN TICKS!¡\n" +
+						"The former (minimum) can have minimum value of 0, and the latter " +
+						"(maximum) can have a minimum value of 1. This would have the same " +
+						"effect as leaving out the two integers, as follows:\n\t" +
+						"EXAMPLE:  \'fullClassName\': \"\'abilityName\'|\'arguments\'\n\n" +
+						"Finally, make sure you LOOK AT THE DEFAULT MAPPINGS. Using this tutorial" +
+						"along with the default mappings should provide you with a good " +
+						"understanding at how the config is setup. That said, here is a sample " +
+						"and breakdown:\n\n" +
+						"\"net.minecraft.entity.passive.EntityChicken\": " +
+						"\"drop|6000,12000|minecraft:egg:0\"\n" +
+						"This gives the mapping to the Minecraft Chicken entity. The ability is " +
+						"the AbilityDrop (mapped using its name \"drop\").\n6000 is the minimum " +
+						"cooldown, which is 5 minutes, and 12000 is the maximum cooldown, being " +
+						"10 minutes.\nA random integer will be pulled between these two " +
+						"(6000-11999 ticks) and will be set as teh cooldown when you trigger the " +
+						"ability.\nFor this specific ability, the first arg is the item/block " +
+						"name (using the format: \"modID:itemName:metadata\").\nFor this ability, " +
+						"there are no other args.\n\n\n\n" +
+						"The following are the args of all default abilities, " +
+						"as well as each's name.\nAssume numerical numbers are integers unless specified.\n" +
+						"name - args (separates by commas)\n" +
+						"\tdrop - modid item mapping\n" +
+						"\tsummon - class path for summon entity , number of entities to spawn , " +
+						"the radius around the player in which the entities will spawn\n" +
+						"\texplode - explosion radius (float)\n" +
+						"\tteleport - the maximum distance for player to locate " +
+						"(cursor position)(double)\n" +
+						"\tejectLargeFireball - the maximum distance for player to locate " +
+						"(cursor position)(double) , explosion radius\n" +
+						"\tejectSmallFireball - the maximum distance for player to locate " +
+						"(cursor position)(double)\n" +
+						"\tejectSnowball - the maximum distance for player to locate " +
+						"(cursor position)(double)\n"
+			com.google.common.io.Files.write(text, mapHelper, Charset.defaultCharset)
+		}
+
 	}
 
 	private def getDefaultAbilities(): JsonObject = {
@@ -153,6 +207,7 @@ object MAOptions extends OptionRegister() {
 	}
 
 	override def register(): Unit = {
+
 	}
 
 	@SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
