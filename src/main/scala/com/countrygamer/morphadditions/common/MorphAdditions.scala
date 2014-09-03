@@ -2,6 +2,7 @@ package com.countrygamer.morphadditions.common
 
 import com.countrygamer.cgo.common.RegisterHelper
 import com.countrygamer.cgo.wrapper.common.PluginWrapper
+import com.countrygamer.morphadditions.addon.Morph
 import com.countrygamer.morphadditions.client.KeyHandler
 import com.countrygamer.morphadditions.common.network.PacketKeyPressed
 import com.countrygamer.morphadditions.waila.Waila
@@ -43,6 +44,8 @@ object MorphAdditions extends PluginWrapper {
 
 		RegisterHelper.registerPacketHandler(this.pluginID, classOf[PacketKeyPressed])
 
+		RegisterHelper.registerCommand(CommandMorphA)
+
 		if (event.getSide == Side.CLIENT) {
 			FMLCommonHandler.instance().bus().register(KeyHandler)
 		}
@@ -59,6 +62,7 @@ object MorphAdditions extends PluginWrapper {
 	def postInit(event: FMLPostInitializationEvent): Unit = {
 		super.postInitialize(event)
 
+		Morph.register()
 		Waila.post()
 
 	}
