@@ -1,1 +1,3 @@
 key.triggerMorphAbility.name=트리거 모프 어빌리티
+
+commands.morphadditions:morpha.usage=/morpha force|give <player> <entity> [dataTag]
