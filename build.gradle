@@ -70,7 +70,7 @@ repositories {
 }
 
 dependencies {
-     compile("com.countrygamer.cgo:CGOrigin:${config.minecraft_version}-3+:dev")
+    compile("com.countrygamer.cgo:CGOrigin:${config.minecraft_version}-3+:dev")
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,7 +194,7 @@ apply plugin: "curseforge"
 // Only if not on jenkins
 if (System.getenv().BUILD_NUMBER == null) {
     // Load the config
-    ext.curseFile = file "../curse.properties"    
+    ext.curseFile = file "../curse.properties"
     curseFile.withReader {
         def prop = new Properties()
         prop.load(it)
@@ -258,7 +258,7 @@ private void setLastCursePush(String prevGitKey, String nextGitKey) {
     token.append(prevGitKey)
     value.append(nextGitKey)
 
-    ant.replace(file: "curseforge.properties", token: token.toString(), value: value.toString())
+    ant.replace(file: "props/curseforge.properties", token: token.toString(), value: value.toString())
 }
 
 private String getRawChangelog() {
@@ -285,7 +285,7 @@ private String getRawChangelog() {
 private String getChangelog() {
     String changelog = getRawChangelog()
     final String[] split = changelog.split("\n")
-    
+
     final StringBuilder result = new StringBuilder()
 
     result.append("Changelog:\n")

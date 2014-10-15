@@ -2,7 +2,7 @@ package com.countrygamer.morphadditions.addon
 
 import java.util
 
-import com.countrygamer.cgo.common.lib.LogHelper
+import com.countrygamer.cgo.library.common.lib.LogHelper
 import com.countrygamer.morphadditions.common.MorphAdditions
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}

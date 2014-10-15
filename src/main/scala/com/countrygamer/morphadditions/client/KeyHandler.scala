@@ -1,7 +1,6 @@
 package com.countrygamer.morphadditions.client
 
-import com.countrygamer.cgo.common.network.PacketHandler
-import com.countrygamer.cgo.wrapper.common.network.AbstractPacket
+import com.countrygamer.cgo.library.common.nethandler.{IPacket, PacketHandler}
 import com.countrygamer.morphadditions.common.MorphAdditions
 import com.countrygamer.morphadditions.common.network.PacketKeyPressed
 import cpw.mods.fml.client.registry.ClientRegistry
@@ -36,7 +35,7 @@ object KeyHandler {
 		if (!Minecraft.getMinecraft.inGameHasFocus) return
 
 		if (this.triggerKey_Key.isPressed) {
-			val packet: AbstractPacket = new PacketKeyPressed()
+			val packet: IPacket = new PacketKeyPressed()
 			PacketHandler.sendToServer(MorphAdditions.pluginID, packet)
 		}
 

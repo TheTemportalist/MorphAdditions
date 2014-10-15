@@ -1,6 +1,6 @@
 package com.countrygamer.morphadditions.common
 
-import com.countrygamer.cgo.common.RegisterHelper
+import com.countrygamer.cgo.library.common.helpers.RegisterHelper
 import com.countrygamer.cgo.wrapper.common.PluginWrapper
 import com.countrygamer.morphadditions.addon.Morph
 import com.countrygamer.morphadditions.client.KeyHandler
@@ -20,17 +20,21 @@ import cpw.mods.fml.relauncher.Side
  */
 @Mod(modid = MorphAdditions.pluginID, name = MorphAdditions.pluginName,
 	version = "@PLUGIN_VERSION@",
-	guiFactory = "com.countrygamer.morphadditions.client.gui.configFactory.GuiFactory",
+	guiFactory = MorphAdditions.clientProxy,
 	modLanguage = "scala",
-	dependencies = "required-after:Forge@[10.13,);required-after:cgo@[3,);required-after:Morph@[0.9.0,);"
+	dependencies = "required-after:Forge@[10.13,);required-after:cgo@[3.1,);required-after:Morph@[0.9.0,);"
 )
 object MorphAdditions extends PluginWrapper {
 
 	final val pluginID = "morphadditions"
 	final val pluginName = "MorphAdditions"
+	final val clientProxy = "com.countrygamer.morphadditions.client.ClientProxy"
+	final val serverProxy = "com.countrygamer.morphadditions.server.ServerProxy"
 
-	@SidedProxy(clientSide = "com.countrygamer.morphadditions.client.ClientProxy",
-		serverSide = "com.countrygamer.morphadditions.common.CommonProxy")
+	@SidedProxy(
+		clientSide = this.clientProxy,
+		serverSide = this.serverProxy
+	)
 	var proxy: CommonProxy = null
 
 	@Mod.EventHandler

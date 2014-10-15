@@ -2,7 +2,7 @@ package com.countrygamer.morphadditions.common
 
 import java.util
 
-import com.countrygamer.cgo.common.lib.LogHelper
+import com.countrygamer.cgo.library.common.lib.LogHelper
 import com.countrygamer.cgo.wrapper.common.extended.ExtendedEntity
 import com.countrygamer.morphadditions.api.{AbilityAction, MorphActionEvent}
 import cpw.mods.fml.common.FMLCommonHandler

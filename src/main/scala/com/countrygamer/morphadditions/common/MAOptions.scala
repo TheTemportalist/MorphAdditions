@@ -3,12 +3,11 @@ package com.countrygamer.morphadditions.common
 import java.io.{File, FileReader}
 import java.nio.charset.Charset
 
-import com.countrygamer.cgo.common.lib.JsonHelper
+import com.countrygamer.cgo.library.common.register.OptionRegister
+import com.countrygamer.cgo.library.common.utility.Json
 import com.countrygamer.cgo.wrapper.common.extended.ExtendedEntityHandler
-import com.countrygamer.cgo.wrapper.common.registries.OptionRegister
 import com.google.gson._
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.relauncher.SideOnly
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -46,7 +45,7 @@ object MAOptions extends OptionRegister() {
 						File(this.getConfigDirectory(event.getModConfigurationDirectory),
 							"MapAbilities.json")
 		if (!mapAbilities.exists()) {
-			val formattedString: String = JsonHelper
+			val formattedString: String = Json
 					.toReadableString(GSON.toJson(this.getDefaultAbilities()))
 			try {
 				com.google.common.io.Files
@@ -208,11 +207,6 @@ object MAOptions extends OptionRegister() {
 
 	override def register(): Unit = {
 
-	}
-
-	@SideOnly(cpw.mods.fml.relauncher.Side.CLIENT)
-	override def getGuiConfigClass: Class[_ <: net.minecraft.client.gui.GuiScreen] = {
-		classOf[com.countrygamer.morphadditions.client.gui.configFactory.GuiConfig]
 	}
 
 }

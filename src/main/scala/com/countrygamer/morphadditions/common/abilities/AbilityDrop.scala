@@ -1,7 +1,7 @@
 package com.countrygamer.morphadditions.common.abilities
 
-import com.countrygamer.cgo.common.lib.NameParser
-import com.countrygamer.cgo.common.lib.util.UtilDrops
+import com.countrygamer.cgo.library.common.lib.NameParser
+import com.countrygamer.cgo.library.common.utility.Drops
 import com.countrygamer.morphadditions.api.AbilityAction
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -17,7 +17,7 @@ class AbilityDrop() extends AbilityAction() {
 
 	override def trigger(player: EntityPlayer): Unit = {
 		if (!player.worldObj.isRemote) {
-			UtilDrops.spawnItemStack(player.worldObj, player.posX + 0.5, player.posY,
+			Drops.spawnItemStack(player.worldObj, player.posX + 0.5, player.posY,
 				player.posZ + 0.5,
 				this.itemStack, player.worldObj.rand, 20)
 		}

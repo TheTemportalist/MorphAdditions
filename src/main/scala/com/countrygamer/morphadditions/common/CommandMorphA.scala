@@ -1,6 +1,6 @@
 package com.countrygamer.morphadditions.common
 
-import com.countrygamer.cgo.common.lib.util.Player
+import com.countrygamer.cgo.library.common.utility.Player
 import com.countrygamer.morphadditions.addon.Morph
 import morph.api.Api
 import net.minecraft.command.{CommandBase, ICommandSender}
@@ -30,7 +30,7 @@ object CommandMorphA extends CommandBase {
 			return
 		}
 
-		val player: EntityPlayer = Player.getPlayerByUsername(args(1))
+		val player: EntityPlayer = Player.getPlayer(args(1))
 		val entityTag: NBTTagCompound = this.getEntityTag(sender, args)
 
 		val entity: EntityLivingBase = this.getEntity(player.worldObj, entityTag)
@@ -63,7 +63,7 @@ object CommandMorphA extends CommandBase {
 				if (!nbtBase.isInstanceOf[NBTTagCompound]) {
 					sender match {
 						case player: EntityPlayer =>
-							Player.sendMessageToPlayer(player, "Invalid tag")
+							Player.message(player, "Invalid tag")
 						case _ =>
 					}
 					return null

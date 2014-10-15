@@ -2,11 +2,11 @@ package com.countrygamer.morphadditions.common.abilities
 
 import java.lang.reflect.InvocationTargetException
 
-import com.countrygamer.cgo.common.lib.util.Cursor
+import com.countrygamer.cgo.library.common.utility.Cursor
 import com.countrygamer.morphadditions.api.AbilityAction
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.{MovingObjectPosition, Vec3}
 import net.minecraft.world.World
 
 /**
@@ -76,11 +76,11 @@ abstract class AbilityEject() extends AbilityAction() {
 		var z: Double = mop.hitVec.zCoord
 
 		if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-			val newCoords: Array[Int] = Cursor
+			val point: Vec3 = Cursor
 					.getNewCoordsFromSide(mop.blockX, mop.blockY, mop.blockZ, mop.sideHit)
-			x = newCoords(0)
-			y = newCoords(1)
-			z = newCoords(2)
+			x = point.xCoord
+			y = point.yCoord
+			z = point.zCoord
 		}
 
 		var entityHeight: Double = 0.0D

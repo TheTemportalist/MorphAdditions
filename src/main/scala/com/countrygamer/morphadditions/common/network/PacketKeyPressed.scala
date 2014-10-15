@@ -1,6 +1,6 @@
 package com.countrygamer.morphadditions.common.network
 
-import com.countrygamer.cgo.wrapper.common.network.AbstractPacket
+import com.countrygamer.cgo.library.common.nethandler.IPacket
 import com.countrygamer.morphadditions.api.AbilityAction
 import com.countrygamer.morphadditions.common.MAOptions
 import com.countrygamer.morphadditions.common.init.Abilities
@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer
  *
  * @author CountryGamer
  */
-class PacketKeyPressed() extends AbstractPacket {
+class PacketKeyPressed() extends IPacket {
 
 	override def writeTo(buffer: ByteBuf): Unit = {
 

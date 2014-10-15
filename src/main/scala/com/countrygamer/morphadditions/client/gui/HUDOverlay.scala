@@ -1,6 +1,6 @@
 package com.countrygamer.morphadditions.client.gui
 
-import com.countrygamer.cgo.common.lib.LogHelper
+import com.countrygamer.cgo.library.common.lib.LogHelper
 import com.countrygamer.morphadditions.common.{MAOptions, MorphAdditions, MorphedPlayer}
 import cpw.mods.fml.common.eventhandler.{EventPriority, SubscribeEvent}
 import cpw.mods.fml.relauncher.{Side, SideOnly}

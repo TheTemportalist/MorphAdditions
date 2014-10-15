@@ -1,6 +1,6 @@
 package com.countrygamer.morphadditions.common.abilities
 
-import com.countrygamer.cgo.common.lib.util.UtilVector
+import com.countrygamer.cgo.library.common.utility.Teleport
 import com.countrygamer.morphadditions.api.AbilityAction
 import net.minecraft.entity.player.EntityPlayer
 
@@ -14,7 +14,7 @@ class AbilityTeleport() extends AbilityAction() {
 	private var reachLength: Double = 0.0D
 
 	override def trigger(player: EntityPlayer): Unit = {
-		UtilVector.teleportVector(player.worldObj, player, this.reachLength)
+		Teleport.toCursorPosition(player, this.reachLength)
 	}
 
 	override def parse(args: Array[String]): AbilityAction = {
