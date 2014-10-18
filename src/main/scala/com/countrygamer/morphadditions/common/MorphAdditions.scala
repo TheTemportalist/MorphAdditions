@@ -22,7 +22,7 @@ import cpw.mods.fml.relauncher.Side
 	version = "@PLUGIN_VERSION@",
 	guiFactory = MorphAdditions.clientProxy,
 	modLanguage = "scala",
-	dependencies = "required-after:Forge@[10.13,);required-after:cgo@[3.1,);required-after:Morph@[0.9.0,);"
+	dependencies = "required-after:Forge@[10.13,);required-after:cgo@[3.2,);required-after:Morph@[0.9.0,);"
 )
 object MorphAdditions extends PluginWrapper {
 
