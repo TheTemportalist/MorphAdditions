@@ -28,8 +28,8 @@ object MorphAdditions extends PluginWrapper {
 
 	final val pluginID = "morphadditions"
 	final val pluginName = "MorphAdditions"
-	final val clientProxy = "com.countrygamer.morphadditions.client.ClientProxy"
-	final val serverProxy = "com.countrygamer.morphadditions.server.ServerProxy"
+	final val clientProxy = "com.temportalist.morphadditions.client.ClientProxy"
+	final val serverProxy = "com.temportalists.morphadditions.server.ServerProxy"
 
 	@SidedProxy(
 		clientSide = this.clientProxy,
