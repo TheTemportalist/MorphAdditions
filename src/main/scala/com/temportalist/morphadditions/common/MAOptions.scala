@@ -5,7 +5,6 @@ import java.nio.charset.Charset
 
 import com.google.gson._
 import com.temportalist.origin.library.common.register.OptionRegister
-import com.temportalist.origin.library.common.utility.Json
 import com.temportalist.origin.wrapper.common.extended.ExtendedEntityHandler
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import net.minecraft.entity.EntityLivingBase
@@ -45,8 +44,9 @@ object MAOptions extends OptionRegister() {
 						File(this.getConfigDirectory(event.getModConfigurationDirectory),
 							"MapAbilities.json")
 		if (!mapAbilities.exists()) {
-			val formattedString: String = Json
-					.toReadableString(GSON.toJson(this.getDefaultAbilities()))
+			val formattedString: String =
+			//Json.toReadableString(GSON.toJson(this.getDefaultAbilities()))
+				GSON.toJson(this.getDefaultAbilities())
 			try {
 				com.google.common.io.Files
 						.write(formattedString, mapAbilities,
@@ -150,7 +150,8 @@ object MAOptions extends OptionRegister() {
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.passive.EntityChicken",
-			"drop|6000,12000|minecraft:egg:0")
+			"drop|6000,12000|minecraft:egg:0"
+		)
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.passive.EntityWolf",
