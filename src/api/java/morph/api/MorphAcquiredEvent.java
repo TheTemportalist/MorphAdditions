@@ -6,11 +6,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 @Cancelable
-public class MorphAcquiredEvent extends PlayerEvent {
-	public final EntityLivingBase acquiredMorph;
+public class MorphAcquiredEvent extends PlayerEvent
+{
+    public final EntityLivingBase acquiredMorph;
 
-	public MorphAcquiredEvent(EntityPlayer player, EntityLivingBase acquired) {
-		super(player);
-		acquiredMorph = acquired;
-	}
+    public MorphAcquiredEvent(EntityPlayer player, EntityLivingBase acquired)
+    {
+        super(player);
+        acquiredMorph = acquired;
+    }
 }

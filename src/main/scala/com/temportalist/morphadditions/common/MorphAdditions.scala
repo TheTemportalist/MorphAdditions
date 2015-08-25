@@ -4,8 +4,9 @@ import com.temportalist.morphadditions.addon.Morph
 import com.temportalist.morphadditions.client.KeyHandler
 import com.temportalist.morphadditions.common.network.PacketKeyPressed
 import com.temportalist.morphadditions.waila.Waila
-import com.temportalist.origin.library.common.helpers.RegisterHelper
-import com.temportalist.origin.wrapper.common.PluginWrapper
+import com.temportalist.origin.api.common.resource.{EnumResource, IModDetails, IModResource}
+import com.temportalist.origin.foundation.common.IMod
+import com.temportalist.origin.internal.common.handlers.RegisterHelper
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
@@ -18,63 +19,60 @@ import cpw.mods.fml.relauncher.Side
  *
  * @author TheTemportalist
  */
-@Mod(modid = MorphAdditions.pluginID, name = MorphAdditions.pluginName,
-	version = "@PLUGIN_VERSION@",
+@Mod(modid = MorphAdditions.modid, name = MorphAdditions.modname, version = MorphAdditions.version,
 	guiFactory = MorphAdditions.clientProxy,
 	modLanguage = "scala",
-	dependencies = "required-after:Forge@[10.13,);required-after:origin@[3.3,);required-after:Morph@[0.9,);after:Waila@[1,);"
+	dependencies = "required-after:Morph@[0.9,);"//"required-after:origin@[3.3,);after:Waila@[1,);"
 )
-object MorphAdditions extends PluginWrapper {
+object MorphAdditions extends IMod with IModResource {
 
-	final val pluginID = "morphadditions"
-	final val pluginName = "MorphAdditions"
-	final val clientProxy = "com.temportalist.morphadditions.client.ClientProxy"
-	final val serverProxy = "com.temportalist.morphadditions.server.ServerProxy"
+	final val modid = "morphadditions"
+	final val modname = "MorphAdditions"
+	final val version = "@MOD_VERSION@"
+	final val clientProxy = "com.temportalist.morphadditions.client.ProxyClient"
+	final val serverProxy = "com.temportalist.morphadditions.server.ProxyServer"
 
-	@SidedProxy(
-		clientSide = this.clientProxy,
-		serverSide = this.serverProxy
-	)
-	var proxy: CommonProxy = null
+	override def getDetails: IModDetails = this
+
+	override def getModVersion: String = this.version
+
+	override def getModName: String = this.modname
+
+	override def getModid: String = this.modid
+
+	@SidedProxy(clientSide = this.clientProxy, serverSide = this.serverProxy)
+	var proxy: ProxyCommon = null
 
 	@Mod.EventHandler
 	def preInit(event: FMLPreInitializationEvent): Unit = {
-		super.preInitialize(this.pluginID, this.pluginName, event, this.proxy, MAOptions)
+		super.preInitialize(this, event, this.proxy, MAOptions)
+
+		this.registerPackets(classOf[PacketKeyPressed])
 
 		RegisterHelper.registerExtendedPlayer("morphedPlayer", classOf[MorphedPlayer],
 			deathPersistance = true)
-
-		RegisterHelper.registerHandler(this, null)
-
-		RegisterHelper.registerPacketHandler(this.pluginID, classOf[PacketKeyPressed])
-
 		RegisterHelper.registerCommand(CommandMorphA)
-
-		if (event.getSide == Side.CLIENT) {
-			FMLCommonHandler.instance().bus().register(KeyHandler)
-		}
 
 	}
 
 	@Mod.EventHandler
 	def init(event: FMLInitializationEvent): Unit = {
-		super.initialize(event)
+		super.initialize(event, this.proxy)
 
 	}
 
 	@Mod.EventHandler
 	def postInit(event: FMLPostInitializationEvent): Unit = {
-		super.postInitialize(event)
-
+		super.postInitialize(event, this.proxy)
 		Morph.register()
 		Waila.post()
 
+		this.loadResource("cooldown", (EnumResource.GUI, "cooldown"))
 	}
 
 	@SubscribeEvent
 	def tickingPlayer(event: TickEvent.PlayerTickEvent): Unit = {
-		if (event.phase == Phase.START)
-			this.proxy.tickPlayer(MAOptions.getMP(event.player))
+		if (event.phase == Phase.START) this.proxy.tickPlayer(MAOptions.getMP(event.player))
 	}
 
 }

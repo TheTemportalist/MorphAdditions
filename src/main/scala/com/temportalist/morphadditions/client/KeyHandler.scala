@@ -1,13 +1,12 @@
 package com.temportalist.morphadditions.client
 
-import com.temportalist.morphadditions.common.MorphAdditions
 import com.temportalist.morphadditions.common.network.PacketKeyPressed
-import com.temportalist.origin.library.common.nethandler.{IPacket, PacketHandler}
-import cpw.mods.fml.client.registry.ClientRegistry
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
+import com.temportalist.morphadditions.common.{MAOptions, MorphAdditions, MorphedPlayer}
+import com.temportalist.origin.api.client.utility.Rendering
+import com.temportalist.origin.foundation.client.{EnumKeyCategory, IKeyBinder}
+import cpw.mods.fml.common.ObfuscationReflectionHelper
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.minecraft.client.Minecraft
+import modwarriors.notenoughkeys.api.Api
 import net.minecraft.client.settings.KeyBinding
 import org.lwjgl.input.Keyboard
 
@@ -17,28 +16,22 @@ import org.lwjgl.input.Keyboard
  * @author TheTemportalist
  */
 @SideOnly(Side.CLIENT)
-object KeyHandler {
+object KeyHandler extends IKeyBinder {
 
-	private val triggerKey_Name: String = "key.triggerMorphAbility.name"
-	private val triggerKey_Int: Int = Keyboard.KEY_L
-	private var triggerKey_Key: KeyBinding = null
+	val trigger = this.makeKeyBinding(
+		"key.triggerMorphAbility.name", Keyboard.KEY_L, EnumKeyCategory.GAMEPLAY)
+	Api.registerMod(MorphAdditions.getModName, this.trigger.getKeyDescription)
 
-	{
-		this.triggerKey_Key = new KeyBinding(this.triggerKey_Name, this.triggerKey_Int,
-			"key.categories.gameplay")
-		ClientRegistry.registerKeyBinding(this.triggerKey_Key)
-
-	}
-
-	@SubscribeEvent
-	def onKeyInput(event: KeyInputEvent): Unit = {
-		if (!Minecraft.getMinecraft.inGameHasFocus) return
-
-		if (this.triggerKey_Key.isPressed) {
-			val packet: IPacket = new PacketKeyPressed()
-			PacketHandler.sendToServer(MorphAdditions.pluginID, packet)
+	override def onKeyPressed(keyBinding: KeyBinding): Unit = {
+		keyBinding match {
+			case this.trigger => if (Rendering.mc.inGameHasFocus)
+				MAOptions.getMP(Rendering.mc.thePlayer) match {
+					case morphed: MorphedPlayer =>
+						if (morphed.getCoolDown <= 0) new PacketKeyPressed().sendToServer()
+					case _ =>
+				}
+			case _ =>
 		}
-
 	}
 
 }

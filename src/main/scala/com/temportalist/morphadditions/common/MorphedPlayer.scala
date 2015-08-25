@@ -3,9 +3,8 @@ package com.temportalist.morphadditions.common
 import java.util
 
 import com.temportalist.morphadditions.api.{AbilityAction, MorphActionEvent}
-import com.temportalist.origin.library.common.lib.LogHelper
-import com.temportalist.origin.wrapper.common.extended.ExtendedEntity
-import cpw.mods.fml.common.FMLCommonHandler
+import com.temportalist.origin.foundation.common.extended.ExtendedEntity
+import com.temportalist.origin.foundation.common.network.PacketExtendedSync
 import cpw.mods.fml.relauncher.Side
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -25,7 +24,7 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 
 	def updateTag(key: String, newTag: NBTTagCompound): Unit = {
 		this.data.put(key, newTag)
-		this.syncEntity()
+		this.syncEntityFull()
 	}
 
 	def hasTag(key: String): Boolean = {
@@ -33,23 +32,23 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 	}
 
 	def getTag(key: String): NBTTagCompound = {
-		if (this.hasTag(key))
-			this.data.get(key)
-		else
-			new NBTTagCompound()
+		if (this.hasTag(key)) this.data.get(key)
+		else new NBTTagCompound()
 	}
 
 	def trigger(entity: EntityLivingBase, ability: AbilityAction): Unit = {
-		if (this.canTrigger() && !MinecraftForge.EVENT_BUS
-				.post(new MorphActionEvent(this.player, entity, ability))) {
+		if (this.canTrigger && !MinecraftForge.EVENT_BUS.post(
+					new MorphActionEvent(this.player, entity, ability))) {
 			ability.copy().trigger(this.player)
 
-			this.cooldownTicks = ability.getCooldown
-			this.syncEntity()
+			this.cooldownTicks = ability.getCoolDown
+			this.syncCoolDown()
 		}
 	}
 
-	def canTrigger(): Boolean = {
+	def syncCoolDown(): Unit = this.syncEntity("cooldown", this.cooldownTicks)
+
+	def canTrigger: Boolean = {
 		this.player.capabilities.isCreativeMode || this.cooldownTicks < 0
 	}
 
@@ -61,11 +60,11 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		}
 	}
 
-	def getCooldown(): Int = {
+	def getCoolDown: Int = {
 		this.cooldownTicks
 	}
 
-	def getCooldownTime(): String = {
+	def getCoolDownTime: String = {
 		//this.printCooldown("")
 		val totalSeconds: Int = this.cooldownTicks / 20
 		val ticks: Int = this.cooldownTicks % 20
@@ -86,9 +85,9 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		minutes + ":" + seconds_str + ":" + ticks_str
 	}
 
-	def clearCooldown(): Unit = {
+	def clearCoolDown(): Unit = {
 		this.cooldownTicks = -1
-		this.syncEntity()
+		this.syncCoolDown()
 	}
 
 	override def saveNBTData(tagCom: NBTTagCompound): Unit = {
@@ -121,13 +120,11 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 
 	}
 
-	def getSide(): Side = {
-		FMLCommonHandler.instance().getEffectiveSide
+	override def handleSyncPacketData(uniqueIdentifier: String, packet: PacketExtendedSync,
+			side: Side): Unit = {
+		uniqueIdentifier match {
+			case "cooldown" => this.cooldownTicks = packet.get[Int]
+			case _ =>
+		}
 	}
-
-	def printCooldown(message: String): Unit = {
-		LogHelper.info(MorphAdditions.pluginName,
-			this.getSide() + " " + message + " " + this.cooldownTicks)
-	}
-
 }

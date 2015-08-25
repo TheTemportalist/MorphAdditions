@@ -1,8 +1,8 @@
 package com.temportalist.morphadditions.common.abilities
 
 import com.temportalist.morphadditions.api.AbilityAction
-import com.temportalist.origin.library.common.lib.NameParser
-import com.temportalist.origin.library.common.utility.Drops
+import com.temportalist.origin.api.common.lib.{NameParser, V3O}
+import com.temportalist.origin.api.common.utility.Stacks
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
@@ -17,8 +17,7 @@ class AbilityDrop() extends AbilityAction() {
 
 	override def trigger(player: EntityPlayer): Unit = {
 		if (!player.worldObj.isRemote) {
-			Drops.spawnItemStack(player.worldObj, player.posX + 0.5, player.posY,
-				player.posZ + 0.5,
+			Stacks.spawnItemStack(player.worldObj, new V3O(player) + V3O.CENTER.suppressedYAxis(),
 				this.itemStack, player.worldObj.rand, 20)
 		}
 	}

@@ -1,7 +1,7 @@
 package com.temportalist.morphadditions.client.gui.configFactory
 
 import com.temportalist.morphadditions.common.MorphAdditions
-import com.temportalist.origin.wrapper.client.gui.configFactory.GuiConfigWrapper
+import com.temportalist.origin.foundation.client.gui.GuiConfigBase
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.gui.GuiScreen
 
@@ -12,5 +12,5 @@ import net.minecraft.client.gui.GuiScreen
  */
 @SideOnly(Side.CLIENT)
 class GuiConfig(guiScreen: GuiScreen)
-		extends GuiConfigWrapper(guiScreen, MorphAdditions, MorphAdditions.pluginID) {
+		extends GuiConfigBase(guiScreen, MorphAdditions, MorphAdditions.getModid) {
 }

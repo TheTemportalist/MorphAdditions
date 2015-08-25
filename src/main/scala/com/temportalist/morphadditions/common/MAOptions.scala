@@ -1,11 +1,13 @@
 package com.temportalist.morphadditions.common
 
-import java.io.{File, FileReader}
+import java.io.{File, FileNotFoundException, FileReader, IOException}
 import java.nio.charset.Charset
 
+import com.google.common.io.Files
 import com.google.gson._
-import com.temportalist.origin.library.common.register.OptionRegister
-import com.temportalist.origin.wrapper.common.extended.ExtendedEntityHandler
+import com.temportalist.origin.api.common.utility.Json
+import com.temportalist.origin.foundation.common.register.OptionRegister
+import com.temportalist.origin.internal.common.extended.ExtendedEntityHandler
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -15,7 +17,7 @@ import net.minecraft.entity.player.EntityPlayer
  *
  * @author TheTemportalist
  */
-object MAOptions extends OptionRegister() {
+object MAOptions extends OptionRegister {
 
 	def getMP(player: EntityPlayer): MorphedPlayer = {
 		ExtendedEntityHandler.getExtended(player, classOf[MorphedPlayer])
@@ -24,74 +26,56 @@ object MAOptions extends OptionRegister() {
 
 	var HUD_ticks: Int = 100
 
-	private final val GSON: Gson = new Gson
-	private final val JSONPARSER: JsonParser = new JsonParser
+	override def hasDefaultConfig: Boolean = false
 
 	override def getConfigDirectory(configDir: File): File = {
 		val morphAddition: File = new File(configDir, "Morph Additions")
-		if (!morphAddition.exists()) {
-			morphAddition.mkdir()
-		}
+		if (!morphAddition.exists()) morphAddition.mkdir()
 		morphAddition
 	}
 
-	override def hasCustomConfiguration: Boolean = {
-		true
-	}
-
 	override def customizeConfiguration(event: FMLPreInitializationEvent): Unit = {
-		val mapAbilities: File = new
-						File(this.getConfigDirectory(event.getModConfigurationDirectory),
-							"MapAbilities.json")
+		val mapAbilities: File = new File(
+			this.getConfigDirectory(event.getModConfigurationDirectory), "MapAbilities.json")
+
 		if (!mapAbilities.exists()) {
-			val formattedString: String =
-			//Json.toReadableString(GSON.toJson(this.getDefaultAbilities()))
-				GSON.toJson(this.getDefaultAbilities())
+			val formattedString: String = Json.gson.toJson(this.getDefaultAbilities)
 			try {
-				com.google.common.io.Files
-						.write(formattedString, mapAbilities,
-				            Charset.defaultCharset)
+				Files.write(formattedString, mapAbilities, Charset.defaultCharset)
 			}
 			catch {
-				case e: java.io.IOException => {
-					e.printStackTrace
-				}
+				case e: IOException => e.printStackTrace()
 			}
 		}
 		if (mapAbilities.exists()) {
 			var jsonObject: JsonObject = new JsonObject()
 			try {
-				jsonObject = this.JSONPARSER.parse(new FileReader(mapAbilities)).getAsJsonObject
+				jsonObject = Json.parser.parse(new FileReader(mapAbilities)).getAsJsonObject
 			}
 			catch {
-				case e: java.io.FileNotFoundException => {
-					e.printStackTrace
-				}
+				case e: FileNotFoundException => e.printStackTrace()
 			}
 
 			val iterator = jsonObject.entrySet().iterator()
 			while (iterator.hasNext) {
 				val key: String = iterator.next().getKey
 				try {
-					val entityClass: Class[_ <: EntityLivingBase] = Class.forName(key)
-							.asInstanceOf[Class[_ <: EntityLivingBase]]
-
-					val abilityString: String = jsonObject.get(key).getAsString
-
-					ApiHelper.mapAbilityByParameters(entityClass, abilityString)
-
+					val entityClass = Class.forName(key)
+					if (entityClass != null &&
+							entityClass.isInstanceOf[Class[_ <: EntityLivingBase]]) {
+						ApiHelper.mapAbilityByParameters(
+							entityClass.asInstanceOf[Class[_ <: EntityLivingBase]],
+							jsonObject.get(key).getAsString)
+					}
 				}
 				catch {
-					case e: ClassCastException =>
-						e.printStackTrace()
+					case e: ClassCastException => e.printStackTrace()
 				}
 			}
-
 		}
 
-		val mapHelper: File = new
-						File(this.getConfigDirectory(event.getModConfigurationDirectory),
-							"MappingHelp.txt")
+		val mapHelper = new File(
+			this.getConfigDirectory(event.getModConfigurationDirectory), "MappingHelp.txt")
 		if (!mapHelper.exists()) {
 			val text: String =
 				"MapAbilities.json Tutorial\n" +
@@ -140,12 +124,12 @@ object MAOptions extends OptionRegister() {
 						"(cursor position)(double)\n" +
 						"\tejectSnowball - the maximum distance for player to locate " +
 						"(cursor position)(double)\n"
-			com.google.common.io.Files.write(text, mapHelper, Charset.defaultCharset)
+			Files.write(text, mapHelper, Charset.defaultCharset)
 		}
 
 	}
 
-	private def getDefaultAbilities(): JsonObject = {
+	private def getDefaultAbilities: JsonObject = {
 		val jsonObject: JsonObject = new JsonObject
 
 		jsonObject.addProperty(
@@ -206,8 +190,6 @@ object MAOptions extends OptionRegister() {
 		jsonObject
 	}
 
-	override def register(): Unit = {
-
-	}
+	override def register(): Unit = {}
 
 }

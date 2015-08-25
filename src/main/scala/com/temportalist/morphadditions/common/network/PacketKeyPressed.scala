@@ -3,8 +3,9 @@ package com.temportalist.morphadditions.common.network
 import com.temportalist.morphadditions.api.AbilityAction
 import com.temportalist.morphadditions.common.MAOptions
 import com.temportalist.morphadditions.common.init.Abilities
-import com.temportalist.origin.library.common.nethandler.IPacket
-import io.netty.buffer.ByteBuf
+import com.temportalist.origin.foundation.common.network.IPacket
+import cpw.mods.fml.relauncher.Side
+import morph.api.Api
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -15,31 +16,13 @@ import net.minecraft.entity.player.EntityPlayer
  */
 class PacketKeyPressed() extends IPacket {
 
-	override def writeTo(buffer: ByteBuf): Unit = {
-
-	}
-
-	override def readFrom(buffer: ByteBuf): Unit = {
-
-	}
-
-	override def handleOnClient(player: EntityPlayer): Unit = {
-		this.handle(player, isClient = true)
-	}
-
-	override def handleOnServer(player: EntityPlayer): Unit = {
-		this.handle(player, isClient = false)
-	}
-
-	def handle(player: EntityPlayer, isClient: Boolean): Unit = {
-		val entity: EntityLivingBase = morph.api.Api
-				.getMorphEntity(player.getCommandSenderName, isClient)
-
-		if (entity != null) {
-			val ability: AbilityAction = Abilities.getAbility(entity)
-			if (ability != null) {
-				MAOptions.getMP(player).trigger(entity, ability)
-			}
+	override def handle(player: EntityPlayer, side: Side): Unit = {
+		Api.getMorphEntity(player.getCommandSenderName, side.isClient) match {
+			case entity: EntityLivingBase =>
+				Abilities.getAbility(entity) match {
+					case ability: AbilityAction =>
+						MAOptions.getMP(player).trigger(entity, ability)
+				}
 		}
 
 	}

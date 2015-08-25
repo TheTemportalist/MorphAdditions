@@ -17,13 +17,13 @@ class AbilityExplode() extends AbilityAction() {
 
 	override def trigger(player: EntityPlayer): Unit = {
 		if (!player.worldObj.isRemote) {
-			val canDestroyBlocks: Boolean = player.worldObj.getGameRules()
-					.getGameRuleBooleanValue("mobGriefing")
+			val canDestroyBlocks: Boolean =
+				player.worldObj.getGameRules.getGameRuleBooleanValue("mobGriefing")
 
 			var radius: Float = this.explosionRadius
 			val morphedEnt: Entity = Api.getMorphEntity(player.getCommandSenderName, false)
-			if (morphedEnt.isInstanceOf[EntityCreeper] && morphedEnt.getDataWatcher
-					.getWatchableObjectByte(17).equals((1).asInstanceOf[Byte])) {
+			if (morphedEnt.isInstanceOf[EntityCreeper] && morphedEnt.getDataWatcher.
+					getWatchableObjectByte(17).equals(1.asInstanceOf[Byte])) {
 				radius *= 2
 			}
 

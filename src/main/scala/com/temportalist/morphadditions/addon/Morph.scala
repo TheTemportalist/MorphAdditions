@@ -3,7 +3,6 @@ package com.temportalist.morphadditions.addon
 import java.util
 
 import com.temportalist.morphadditions.common.MorphAdditions
-import com.temportalist.origin.library.common.lib.LogHelper
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.world.World
@@ -28,12 +27,12 @@ object Morph {
 			this.MorphState = Class.forName("morph.common.morph.MorphState")
 			this.EntityHelper = Class.forName("morph.common.core.EntityHelper")
 
-			LogHelper.info(MorphAdditions.pluginName, "Morph Reflection Success")
+			MorphAdditions.log("Morph Reflection Success")
 		}
 		catch {
 			case e: Exception =>
 				e.printStackTrace()
-				LogHelper.info(MorphAdditions.pluginName, "Morph Reflection Failure")
+				MorphAdditions.log("Morph Reflection Failure")
 				return
 		}
 

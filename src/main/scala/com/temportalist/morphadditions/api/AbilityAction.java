@@ -43,7 +43,7 @@ public abstract class AbilityAction {
 
 		if (ability != null) {
 			ability.parse(this.getArgs());
-			ability.setCooldown(this.minTicks, this.maxTicks);
+			ability.setCoolDown(this.minTicks, this.maxTicks);
 		}
 
 		return ability;
@@ -75,7 +75,7 @@ public abstract class AbilityAction {
 	 * @param maxTicks The maximum amout of ticks (exclusive). If less than or equal to minTicks, will increment
 	 * @return this ability
 	 */
-	public AbilityAction setCooldown(int minTicks, int maxTicks) {
+	public AbilityAction setCoolDown(int minTicks, int maxTicks) {
 		this.minTicks = minTicks;
 		this.maxTicks = maxTicks;
 		while (this.maxTicks - this.minTicks <= 0) {
@@ -95,7 +95,7 @@ public abstract class AbilityAction {
 	 *
 	 * @return The random integer
 	 */
-	public int getCooldown() {
+	public int getCoolDown() {
 		return new Random().nextInt(this.maxTicks - this.minTicks) + this.minTicks;
 	}
 

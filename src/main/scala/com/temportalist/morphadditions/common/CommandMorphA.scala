@@ -1,7 +1,7 @@
 package com.temportalist.morphadditions.common
 
 import com.temportalist.morphadditions.addon.Morph
-import com.temportalist.origin.library.common.utility.Player
+import com.temportalist.origin.foundation.common.utility.Players
 import morph.api.Api
 import net.minecraft.command.{CommandBase, ICommandSender}
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
@@ -30,7 +30,7 @@ object CommandMorphA extends CommandBase {
 			return
 		}
 
-		val player: EntityPlayer = Player.getPlayer(args(1))
+		val player: EntityPlayer = Players.getPlayer(args(1))
 		val entityTag: NBTTagCompound = this.getEntityTag(sender, args)
 
 		val entity: EntityLivingBase = this.getEntity(player.worldObj, entityTag)
@@ -63,7 +63,7 @@ object CommandMorphA extends CommandBase {
 				if (!nbtBase.isInstanceOf[NBTTagCompound]) {
 					sender match {
 						case player: EntityPlayer =>
-							Player.message(player, "Invalid tag")
+							Players.message(player, "Invalid tag")
 						case _ =>
 					}
 					return null

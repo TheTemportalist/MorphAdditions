@@ -81,7 +81,7 @@ object ApiHelper {
 
 		Abilities.setMapping(entityClass,
 			Abilities.getAbilityByNameAndPars(name, pars.toArray(new Array[String](pars.size())))
-					.setCooldown(min_cooldown, max_cooldown))
+					.setCoolDown(min_cooldown, max_cooldown))
 	}
 
 }
