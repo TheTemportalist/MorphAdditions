@@ -9,7 +9,7 @@ import net.minecraft.entity.projectile.EntitySmallFireball
  *
  * @author TheTemportalist
  */
-class AbilityEjectFireballSmall() extends AbilityEjectFireball() {
+class AbilityEjectFireballSmall() extends AbilityEjectFireball("Small") {
 
 	override def getEntityClass(): Class[_ <: Entity] = {
 		classOf[EntitySmallFireball]

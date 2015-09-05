@@ -1,9 +1,12 @@
 package com.temportalist.morphadditions.common
 
+import java.io.IOException
+
 import com.temportalist.morphadditions.addon.Morph
 import com.temportalist.morphadditions.client.KeyHandler
 import com.temportalist.morphadditions.common.network.PacketKeyPressed
 import com.temportalist.morphadditions.waila.Waila
+import com.temportalist.origin.api.client.utility.Rendering
 import com.temportalist.origin.api.common.resource.{EnumResource, IModDetails, IModResource}
 import com.temportalist.origin.foundation.common.IMod
 import com.temportalist.origin.internal.common.handlers.RegisterHelper
@@ -12,7 +15,10 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
 import cpw.mods.fml.common.gameevent.TickEvent.Phase
 import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
-import cpw.mods.fml.relauncher.Side
+import cpw.mods.fml.relauncher.{SideOnly, Side}
+import net.minecraft.client.renderer.entity.Render
+import net.minecraft.client.renderer.texture.{TextureUtil, SimpleTexture}
+import net.minecraft.util.ResourceLocation
 
 /**
  *
@@ -67,12 +73,29 @@ object MorphAdditions extends IMod with IModResource {
 		Morph.register()
 		Waila.post()
 
-		this.loadResource("cooldown", (EnumResource.GUI, "cooldown"))
+		this.loadResource("actionMan", (EnumResource.GUI, "running_man-256.png"))
+		this.loadResource("actionManOutline", (EnumResource.GUI, "running_man_outline.png"))
 	}
 
 	@SubscribeEvent
 	def tickingPlayer(event: TickEvent.PlayerTickEvent): Unit = {
 		if (event.phase == Phase.START) this.proxy.tickPlayer(MAOptions.getMP(event.player))
+	}
+
+	@SideOnly(Side.CLIENT) // TODO, move this function to Origin.Rendering
+	def doesTextureExist(resourceLocation: ResourceLocation): Boolean = {
+		val textureManager = Rendering.mc.getTextureManager
+		var textureObject = textureManager.getTexture(resourceLocation)
+		if (textureObject == null) {
+			textureObject = new SimpleTexture(resourceLocation)
+			try textureObject.loadTexture(Rendering.mc.getResourceManager)
+			catch {
+				case exception: IOException => return false
+				// no other cases because nothing else should be thrown
+			}
+			return true
+		}
+		textureObject != TextureUtil.missingTexture
 	}
 
 }

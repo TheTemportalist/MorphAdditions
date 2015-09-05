@@ -26,8 +26,7 @@ object KeyHandler extends IKeyBinder {
 		keyBinding match {
 			case this.trigger => if (Rendering.mc.inGameHasFocus)
 				MAOptions.getMP(Rendering.mc.thePlayer) match {
-					case morphed: MorphedPlayer =>
-						if (morphed.getCoolDown <= 0) new PacketKeyPressed().sendToServer()
+					case morphed: MorphedPlayer => new PacketKeyPressed().sendToServer()
 					case _ =>
 				}
 			case _ =>

@@ -4,6 +4,7 @@ import java.util
 
 import com.temportalist.morphadditions.api.AbilityAction
 import com.temportalist.morphadditions.common.abilities._
+import morph.api.Ability
 import net.minecraft.entity.EntityLivingBase
 
 /**
@@ -64,10 +65,12 @@ object Abilities {
 
 	def registerAbility(name: String, abilityClass: Class[_ <: AbilityAction]): Unit = {
 		this.abilities.put(name, abilityClass)
+		Ability.registerAbility(name, abilityClass)
 	}
 
 	def setMapping(entityClass: Class[_ <: EntityLivingBase], ability: AbilityAction): Unit = {
 		this.entityToAbility.put(entityClass, ability)
+		Ability.mapAbilities(entityClass, ability)
 	}
 
 	def getAbility(entity: EntityLivingBase): AbilityAction = {

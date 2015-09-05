@@ -1,6 +1,13 @@
 package com.temportalist.morphadditions.api;
 
+import com.temportalist.morphadditions.common.MorphAdditions;
+import com.temportalist.origin.api.common.resource.EnumResource;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import morph.api.Ability;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
@@ -9,13 +16,30 @@ import java.util.logging.Logger;
 /**
  * @author TheTemportalist
  */
-public abstract class AbilityAction {
+public abstract class AbilityAction extends Ability {
 
 	// Cooldown ticks
 	private int minTicks = 0;
 	private int maxTicks = 1;
+	private ResourceLocation icon;
+	protected String name;
 
-	public AbilityAction() {
+	public AbilityAction(String name) {
+		this(EnumResource.GUI, name);
+	}
+
+	public AbilityAction(EnumResource category, String name) {
+		this(MorphAdditions.loadResource(category, "ability/" + name + ".png"));
+		this.name = name;
+	}
+
+	public AbilityAction(ResourceLocation iconLoc) {
+		this.icon = iconLoc;
+	}
+
+	@Override
+	public String getType() {
+		return this.name;
 	}
 
 	/**
@@ -49,6 +73,10 @@ public abstract class AbilityAction {
 		return ability;
 	}
 
+	public String[] getArgs() {
+		return this.args;
+	}
+
 	public void setArgs(String[] args) {
 		this.args = args;
 	}
@@ -62,10 +90,6 @@ public abstract class AbilityAction {
 	public AbilityAction parse(String[] args) {
 		this.setArgs(args);
 		return this;
-	}
-
-	public String[] getArgs() {
-		return this.args;
 	}
 
 	/**
@@ -97,6 +121,56 @@ public abstract class AbilityAction {
 	 */
 	public int getCoolDown() {
 		return new Random().nextInt(this.maxTicks - this.minTicks) + this.minTicks;
+	}
+
+	@Override
+	public void tick() {}
+
+	@Override
+	public void kill() {}
+
+	@Override
+	public void save(NBTTagCompound tag) {}
+
+	@Override
+	public void load(NBTTagCompound tag) {}
+
+	@Override
+	public void postRender() {}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ResourceLocation getIcon() {
+		if (!MorphAdditions.doesTextureExist(this.icon))
+			return MorphAdditions.getResource("actionMan");
+		else return this.icon;
+	}
+
+	@Override
+	public Ability clone() {
+		AbilityAction inst = null;
+		try {
+			// load abilities that pass the resource location parameter
+			inst = this.getClass().getConstructor(
+					ResourceLocation.class).newInstance(this.getIcon());
+		}
+		catch (Exception exception1) {
+			try {
+				// load abilities which internally set the resource location parameter
+				inst = this.getClass().getConstructor().newInstance();
+			}
+			catch (Exception exception2) {
+				exception1.printStackTrace();
+				exception2.printStackTrace();
+			}
+		}
+		if (inst != null) {
+			NBTTagCompound tag = new NBTTagCompound();
+			this.save(tag);
+			inst.load(tag);
+			return inst;
+		}
+		return null;
 	}
 
 }

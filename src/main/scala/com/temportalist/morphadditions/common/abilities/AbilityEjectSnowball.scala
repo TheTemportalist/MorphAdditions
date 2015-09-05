@@ -10,7 +10,7 @@ import net.minecraft.util.MathHelper
  *
  * @author TheTemportalist
  */
-class AbilityEjectSnowball() extends AbilityEject() {
+class AbilityEjectSnowball() extends AbilityEject("Snowball") {
 
 	override def getEntityClass(): Class[_ <: Entity] = {
 		null

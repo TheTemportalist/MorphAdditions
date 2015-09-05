@@ -13,7 +13,7 @@ import net.minecraft.util.MathHelper
  *
  * @author TheTemportalist
  */
-class AbilitySummon() extends AbilityEject() {
+class AbilitySummon() extends AbilityEject("Summon") {
 
 	var entityClass: Class[_ <: EntityLivingBase] = null
 	var hoardSize: Int = 0

@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer
  *
  * @author TheTemportalist
  */
-class AbilityTeleport() extends AbilityAction() {
+class AbilityTeleport() extends AbilityAction("Teleport") {
 
 	private var reachLength: Double = 0.0D
 

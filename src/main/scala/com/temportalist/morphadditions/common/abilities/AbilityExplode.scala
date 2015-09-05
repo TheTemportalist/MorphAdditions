@@ -11,7 +11,7 @@ import net.minecraft.entity.player.EntityPlayer
  *
  * @author TheTemportalist
  */
-class AbilityExplode() extends AbilityAction() {
+class AbilityExplode() extends AbilityAction("Explode") {
 
 	private var explosionRadius: Float = 0.0F
 

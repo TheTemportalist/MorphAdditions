@@ -22,7 +22,7 @@ class ProxyCommon extends IProxy {
 
 	def tickPlayer(player: MorphedPlayer): Unit = {
 		player.tick()
-		if (player.getCoolDown < 0) player.syncCoolDown()
+		//if (player.getCoolDown < 0) player.syncCoolDown()
 	}
 
 }

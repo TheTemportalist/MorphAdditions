@@ -11,7 +11,7 @@ import net.minecraft.util.Vec3
  *
  * @author TheTemportalist
  */
-class AbilityEjectFireballLarge() extends AbilityEjectFireball() {
+class AbilityEjectFireballLarge() extends AbilityEjectFireball("Large") {
 
 	var explosionRadius: Int = 1
 

@@ -42,7 +42,7 @@ object HUDOverlay {//} extends Gui {
 			val timeLeft: String = mPlayer.getCoolDownTime
 			//val x1: Int = width / 2 - this.mc.fontRenderer.getStringWidth(timeLeft)
 			//val y1: Int = y + h + 1
-			MorphAdditions.log(timeLeft)
+			//MorphAdditions.log(timeLeft)
 			val x1: Int = width / 4 + 15 - Rendering.mc.fontRenderer.getStringWidth(timeLeft) - 2
 			val y1: Int = height - 37
 			Rendering.mc.fontRenderer.drawString(timeLeft, x1, y1, 0x000000)

@@ -1,7 +1,9 @@
 package com.temportalist.morphadditions.common.abilities
 
 import com.temportalist.morphadditions.api.AbilityAction
+import com.temportalist.morphadditions.common.MorphAdditions
 import com.temportalist.origin.api.common.lib.{NameParser, V3O}
+import com.temportalist.origin.api.common.resource.EnumResource
 import com.temportalist.origin.api.common.utility.Stacks
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -11,7 +13,7 @@ import net.minecraft.item.ItemStack
  *
  * @author TheTemportalist
  */
-class AbilityDrop() extends AbilityAction() {
+class AbilityDrop() extends AbilityAction("Drop") {
 
 	private var itemStack: ItemStack = null
 

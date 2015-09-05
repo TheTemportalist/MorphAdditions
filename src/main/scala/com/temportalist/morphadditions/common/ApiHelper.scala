@@ -4,6 +4,7 @@ import java.util
 
 import com.temportalist.morphadditions.api.AbilityAction
 import com.temportalist.morphadditions.common.init.Abilities
+import morph.api.Ability
 import net.minecraft.entity.EntityLivingBase
 
 /**
@@ -81,7 +82,7 @@ object ApiHelper {
 
 		Abilities.setMapping(entityClass,
 			Abilities.getAbilityByNameAndPars(name, pars.toArray(new Array[String](pars.size())))
-					.setCoolDown(min_cooldown, max_cooldown))
+				.setCoolDown(min_cooldown, max_cooldown))
 	}
 
 }

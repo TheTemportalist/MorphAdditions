@@ -2,6 +2,7 @@ package com.temportalist.morphadditions.common.abilities
 
 import com.temportalist.morphadditions.api.AbilityAction
 import com.temportalist.origin.api.common.lib.V3O
+import com.temportalist.origin.api.common.resource.EnumResource
 import com.temportalist.origin.api.common.utility.Cursor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -13,7 +14,7 @@ import net.minecraft.world.World
  *
  * @author TheTemportalist
  */
-abstract class AbilityEject() extends AbilityAction() {
+abstract class AbilityEject(name: String) extends AbilityAction("Eject" + name) {
 
 	var targetRadius: Double = 100.0D
 

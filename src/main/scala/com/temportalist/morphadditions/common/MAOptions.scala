@@ -169,7 +169,7 @@ object MAOptions extends OptionRegister {
 
 		jsonObject.addProperty(
 			"net.minecraft.entity.monster.EntityEnderman",
-			"teleport|300.0D"
+			"teleport|1200,2400|300.0D"
 		)
 
 		jsonObject.addProperty(

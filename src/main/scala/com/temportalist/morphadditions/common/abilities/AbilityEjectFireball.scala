@@ -10,7 +10,7 @@ import net.minecraft.util.MathHelper
  *
  * @author TheTemportalist
  */
-abstract class AbilityEjectFireball() extends AbilityEject() {
+abstract class AbilityEjectFireball(subName: String) extends AbilityEject("Fireball" + subName) {
 
 	override def getEntity(player: EntityPlayer): Entity = {
 		val entity: EntityFireball = super.getEntity(player).asInstanceOf[EntityFireball]

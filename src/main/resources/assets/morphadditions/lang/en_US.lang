@@ -1,4 +1,4 @@
 
 key.triggerMorphAbility.name=Trigger Morph Ability
 
-commands.morphadditions:morpha.usage=/morpha force|give <player> <entity> [dataTag]
+commands.morphadditions:morpha.usage=/morpha force|give <player> <entity> [dataTag] | setCoolDown <player> <amt> | clearCoolDown <player>

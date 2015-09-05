@@ -26,26 +26,36 @@ object CommandMorphA extends CommandBase {
 	}
 
 	override def processCommand(sender: ICommandSender, args: Array[String]): Unit = {
-		if (!(args.length >= 3 && args.length <= 4)) {
-			return
+
+		var player: EntityPlayer = sender.asInstanceOf[EntityPlayer]
+		if (args.length >= 2) Players.getPlayer(args(1)) match {
+			case p: EntityPlayer => player = p
+			case _ =>
 		}
 
-		val player: EntityPlayer = Players.getPlayer(args(1))
-		val entityTag: NBTTagCompound = this.getEntityTag(sender, args)
 
-		val entity: EntityLivingBase = this.getEntity(player.worldObj, entityTag)
-				.asInstanceOf[EntityLivingBase]
-		if (entity == null) {
-			return
+		if (args(0).equals("force") && args.length == 3 || args.length == 4) {
+			val entity: EntityLivingBase = this.getEntity(player.worldObj,
+				this.getEntityTag(sender, args)).asInstanceOf[EntityLivingBase]
+			if (entity != null) Api.forceMorph(player.asInstanceOf[EntityPlayerMP], entity)
+		}
+		if (args(0).equals("give") && args.length == 3 || args.length == 4) {
+			val entity: EntityLivingBase = this.getEntity(player.worldObj,
+				this.getEntityTag(sender, args)).asInstanceOf[EntityLivingBase]
+			if (entity != null) Morph.addMorph(player.asInstanceOf[EntityPlayerMP], entity)
+		}
+		if (args(0).equals("setCoolDown") && args.length == 2) {
+			try {
+				MAOptions.getMP(player).setCoolDownTicks(args(1).toInt)
+			}
+			catch {
+				case e: Exception =>
+			}
+		}
+		if (args(0).equals("clearCoolDown")) {
+			MAOptions.getMP(player).clearCoolDown()
 		}
 
-		if (args(0).equals("force")) {
-
-			Api.forceMorph(player.asInstanceOf[EntityPlayerMP], entity)
-		}
-		if (args(0).equals("give")) {
-			Morph.addMorph(player.asInstanceOf[EntityPlayerMP], entity)
-		}
 	}
 
 	def getEntityTag(sender: ICommandSender, args: Array[String]): NBTTagCompound = {

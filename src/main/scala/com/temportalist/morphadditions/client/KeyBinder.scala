@@ -1,12 +1,10 @@
 package com.temportalist.morphadditions.client
 
-import com.temportalist.morphadditions.common.MorphAdditions
 import com.temportalist.origin.api.client.utility.Rendering
 import com.temportalist.origin.foundation.client.EnumKeyCategory
-import cpw.mods.fml.client.registry.ClientRegistry
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
-import modwarriors.notenoughkeys.api.{Api, KeyBindingPressedEvent}
+import modwarriors.notenoughkeys.api.KeyBindingPressedEvent
 import net.minecraft.client.settings.KeyBinding
 import org.lwjgl.input.{Keyboard, Mouse}
 
