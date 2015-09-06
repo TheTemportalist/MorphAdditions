@@ -40,8 +40,10 @@ object MAOptions extends OptionRegister {
 		var onlineAbilities: JsonObject = null
 		if (!mapAbilities.exists()) {
 			try {
-				val onlineAbilitiesString = this.fetchOnlineAbilities
-				onlineAbilities = Json.parser.parse(onlineAbilitiesString).getAsJsonObject
+				var onlineAbilitiesString = this.fetchOnlineAbilities
+				if (onlineAbilitiesString != null)
+					onlineAbilities = Json.parser.parse(onlineAbilitiesString).getAsJsonObject
+				else onlineAbilitiesString = Json.toReadableString(this.getDefaultAbilities.toString)
 				Files.write(onlineAbilitiesString, mapAbilities, Charset.defaultCharset)
 			}
 			catch {
@@ -58,36 +60,41 @@ object MAOptions extends OptionRegister {
 				case e: FileNotFoundException => e.printStackTrace()
 			}
 			// if online abilities were not already pulled this runtime, then pull and parse
-			if (onlineAbilities == null)
-				onlineAbilities = Json.parser.parse(this.fetchOnlineAbilities).getAsJsonObject
-			// compare the two jsons (local config and online resource)
-			// if the local is missing content from online, add them to local json object
-			// and write them to the file
-			var hasChangedLocal = false
-			val onlineAbilityIterator = onlineAbilities.entrySet().iterator()
-			while (onlineAbilityIterator.hasNext) {
-				val modEntry = onlineAbilityIterator.next()
-				val modEntryObject = modEntry.getValue
-				if (!configAbilityJson.has(modEntry.getKey)) {
-					configAbilityJson.add(modEntry.getKey, modEntryObject)
-					if (!hasChangedLocal) hasChangedLocal = true
-				}
-				else {
-					val configModEntry = configAbilityJson.get(modEntry.getKey).getAsJsonObject
-					val modEntityIterator = modEntryObject.getAsJsonObject.entrySet().iterator()
-					while (modEntityIterator.hasNext) {
-						val entityElement = modEntityIterator.next()
-						if (!configModEntry.has(entityElement.getKey)) {
-							configModEntry.add(entityElement.getKey, entityElement.getValue)
-							if (!hasChangedLocal) hasChangedLocal = true
+			if (onlineAbilities == null) {
+				val onlineAbilitiesString = this.fetchOnlineAbilities
+				if (onlineAbilitiesString != null)
+					onlineAbilities = Json.parser.parse(onlineAbilitiesString).getAsJsonObject
+			}
+			if (onlineAbilities != null) {
+				// compare the two jsons (local config and online resource)
+				// if the local is missing content from online, add them to local json object
+				// and write them to the file
+				var hasChangedLocal = false
+				val onlineAbilityIterator = onlineAbilities.entrySet().iterator()
+				while (onlineAbilityIterator.hasNext) {
+					val modEntry = onlineAbilityIterator.next()
+					val modEntryObject = modEntry.getValue
+					if (!configAbilityJson.has(modEntry.getKey)) {
+						configAbilityJson.add(modEntry.getKey, modEntryObject)
+						if (!hasChangedLocal) hasChangedLocal = true
+					}
+					else {
+						val configModEntry = configAbilityJson.get(modEntry.getKey).getAsJsonObject
+						val modEntityIterator = modEntryObject.getAsJsonObject.entrySet().iterator()
+						while (modEntityIterator.hasNext) {
+							val entityElement = modEntityIterator.next()
+							if (!configModEntry.has(entityElement.getKey)) {
+								configModEntry.add(entityElement.getKey, entityElement.getValue)
+								if (!hasChangedLocal) hasChangedLocal = true
+							}
 						}
 					}
 				}
-			}
-			// if we have changed the local json object, then write changes to the file
-			if (hasChangedLocal) {
-				Files.write(Json.toReadableString(configAbilityJson.toString),
-					mapAbilities, Charset.defaultCharset)
+				// if we have changed the local json object, then write changes to the file
+				if (hasChangedLocal) {
+					Files.write(Json.toReadableString(configAbilityJson.toString),
+						mapAbilities, Charset.defaultCharset)
+				}
 			}
 			// Load all values into active abilities
 			val configIterator = configAbilityJson.entrySet().iterator()
