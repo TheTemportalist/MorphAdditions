@@ -1,6 +1,7 @@
 package com.temportalist.morphadditions.api;
 
 import com.temportalist.morphadditions.common.MorphAdditions;
+import com.temportalist.origin.api.client.utility.Rendering;
 import com.temportalist.origin.api.common.resource.EnumResource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -141,7 +142,7 @@ public abstract class AbilityAction extends Ability {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ResourceLocation getIcon() {
-		if (!MorphAdditions.doesTextureExist(this.icon))
+		if (!Rendering.doesTextureExist(this.icon))
 			return MorphAdditions.getResource("actionMan");
 		else return this.icon;
 	}

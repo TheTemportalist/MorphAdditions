@@ -5,7 +5,7 @@ import java.nio.charset.Charset
 
 import com.google.common.io.Files
 import com.google.gson._
-import com.temportalist.origin.api.common.utility.Json
+import com.temportalist.origin.api.common.utility.{ThreadFetchOnlineFile, Json}
 import com.temportalist.origin.foundation.common.register.OptionRegister
 import com.temportalist.origin.internal.common.extended.ExtendedEntityHandler
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
