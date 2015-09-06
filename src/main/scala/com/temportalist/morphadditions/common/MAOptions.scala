@@ -1,6 +1,6 @@
 package com.temportalist.morphadditions.common
 
-import java.io.{File, FileNotFoundException, FileReader, IOException}
+import java.io.{File, FileNotFoundException, IOException}
 import java.nio.charset.Charset
 
 import com.google.common.io.Files
@@ -37,40 +37,79 @@ object MAOptions extends OptionRegister {
 	override def customizeConfiguration(event: FMLPreInitializationEvent): Unit = {
 		val mapAbilities: File = new File(
 			this.getConfigDirectory(event.getModConfigurationDirectory), "MapAbilities.json")
-
+		var onlineAbilities: JsonObject = null
 		if (!mapAbilities.exists()) {
-			val formattedString: String = Json.gson.toJson(this.getDefaultAbilities)
 			try {
-				Files.write(formattedString, mapAbilities, Charset.defaultCharset)
+				val onlineAbilitiesString = this.fetchOnlineAbilities
+				onlineAbilities = Json.parser.parse(onlineAbilitiesString).getAsJsonObject
+				Files.write(onlineAbilitiesString, mapAbilities, Charset.defaultCharset)
 			}
 			catch {
 				case e: IOException => e.printStackTrace()
 			}
 		}
 		if (mapAbilities.exists()) {
-			var jsonObject: JsonObject = new JsonObject()
+			// Read and parse the local config json file
+			var configAbilityJson: JsonObject = new JsonObject()
 			try {
-				jsonObject = Json.parser.parse(new FileReader(mapAbilities)).getAsJsonObject
+				configAbilityJson = Json.getJson(mapAbilities).getAsJsonObject
 			}
 			catch {
 				case e: FileNotFoundException => e.printStackTrace()
 			}
-
-			val iterator = jsonObject.entrySet().iterator()
-			while (iterator.hasNext) {
-				val key: String = iterator.next().getKey
-				try {
-					val entityClass = Class.forName(key)
-					if (entityClass != null &&
-							entityClass.isInstanceOf[Class[_ <: EntityLivingBase]]) {
-						ApiHelper.mapAbilityByParameters(
-							entityClass.asInstanceOf[Class[_ <: EntityLivingBase]],
-							jsonObject.get(key).getAsString)
+			// if online abilities were not already pulled this runtime, then pull and parse
+			if (onlineAbilities == null)
+				onlineAbilities = Json.parser.parse(this.fetchOnlineAbilities).getAsJsonObject
+			// compare the two jsons (local config and online resource)
+			// if the local is missing content from online, add them to local json object
+			// and write them to the file
+			var hasChangedLocal = false
+			val onlineAbilityIterator = onlineAbilities.entrySet().iterator()
+			while (onlineAbilityIterator.hasNext) {
+				val modEntry = onlineAbilityIterator.next()
+				val modEntryObject = modEntry.getValue
+				if (!configAbilityJson.has(modEntry.getKey)) {
+					configAbilityJson.add(modEntry.getKey, modEntryObject)
+					if (!hasChangedLocal) hasChangedLocal = true
+				}
+				else {
+					val configModEntry = configAbilityJson.get(modEntry.getKey).getAsJsonObject
+					val modEntityIterator = modEntryObject.getAsJsonObject.entrySet().iterator()
+					while (modEntityIterator.hasNext) {
+						val entityElement = modEntityIterator.next()
+						if (!configModEntry.has(entityElement.getKey)) {
+							configModEntry.add(entityElement.getKey, entityElement.getValue)
+							if (!hasChangedLocal) hasChangedLocal = true
+						}
 					}
 				}
-				catch {
-					case e: ClassCastException => e.printStackTrace()
+			}
+			// if we have changed the local json object, then write changes to the file
+			if (hasChangedLocal) {
+				Files.write(Json.toReadableString(configAbilityJson.toString),
+					mapAbilities, Charset.defaultCharset)
+			}
+			// Load all values into active abilities
+			val configIterator = configAbilityJson.entrySet().iterator()
+			while (configIterator.hasNext) {
+				val entityElementIterator = configIterator.next().getValue
+						.getAsJsonObject.entrySet().iterator()
+				while (entityElementIterator.hasNext) {
+					val entityElement = entityElementIterator.next()
+					try {
+						val entityClass = Class.forName(entityElement.getKey)
+						if (entityClass != null &&
+								entityClass.isInstanceOf[Class[_ <: EntityLivingBase]]) {
+							ApiHelper.mapAbilityByParameters(
+								entityClass.asInstanceOf[Class[_ <: EntityLivingBase]],
+								entityElement.getValue.getAsString)
+						}
+					}
+					catch {
+						case e: ClassCastException => e.printStackTrace()
+					}
 				}
+
 			}
 		}
 
@@ -129,6 +168,43 @@ object MAOptions extends OptionRegister {
 
 	}
 
+	private def fetchOnlineAbilities: String = {
+		ThreadFetchOnlineFile.fetchResource("https://raw.githubusercontent.com/"
+				+ "TheTemportalist/MorphAdditions/tree/master/src/main/"
+				+ "resources/assets/morphadditions/DefaultAbilities.json")
+	}
+
+	/*
+	private def parseAbilityJson(jsonString: String): mutable.Map[String, String] = {
+		val json = Json.parser.parse(jsonString)
+		val abilityMap = mutable.Map[String, String]()
+		try {
+			val jsonIterator = json.getAsJsonObject.entrySet().iterator()
+			while (jsonIterator.hasNext) {
+				// Note, we do not care about the entry's key because its purpose is to easily
+				//  sort the entries in the file for human readability
+				val entry = jsonIterator.next()
+				val entityToAbility = entry.getValue.getAsJsonObject
+				val modEntityIterator = entityToAbility.entrySet().iterator()
+				while (modEntityIterator.hasNext) {
+					val entityEntry = modEntityIterator.next()
+					abilityMap(entityEntry.getKey) = entityEntry.getValue.getAsString
+				}
+			}
+		}
+		catch {
+			case e: Exception => e.printStackTrace()
+		}
+		abilityMap
+	}
+	*/
+
+	/**
+	 * Had been used to create the json object for config writing.
+	 * Now moved to online handled system, much like ichun.Morph's system.
+	 * @return
+	 */
+	@Deprecated
 	private def getDefaultAbilities: JsonObject = {
 		val jsonObject: JsonObject = new JsonObject
 

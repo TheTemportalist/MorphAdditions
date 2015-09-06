@@ -1,0 +1,34 @@
+MapAbilities.json Tutorial
+This is a short tutorial on the mappings and their format!
+Each entity can have ONLY 1 trigger-able ability (AbilityAction). Similar to Morph, the mappings are laid out like so in the config:
+	EXAMPLE:  'fullClassName': "'abilityName'|'minimumCooldown','maximumCooldown'|'arguments'
+
+So here is the break down if that was not simple enough :P
+First, is the full class name. This is the KEY for the mapping, as is shown in json file format.
+EXAMPLE:"net.minecraft.entity.passive.EntityPig"
+The value, then, is primarily the abilities mapped name. All inherent abilities can be found in the default generated file.
+After the name, is the minimum and maximum cooldown times. ¡!IN TICKS!¡
+The former (minimum) can have minimum value of 0, and the latter (maximum) can have a minimum value of 1. This would have the same effect as leaving out the two integers, as follows:
+	EXAMPLE:  'fullClassName': "'abilityName'|'arguments'
+
+Finally, make sure you LOOK AT THE DEFAULT MAPPINGS. Using this tutorialalong with the default mappings should provide you with a good understanding at how the config is setup. That said, here is a sample and breakdown:
+
+"net.minecraft.entity.passive.EntityChicken": "drop|6000,12000|minecraft:egg:0"
+This gives the mapping to the Minecraft Chicken entity. The ability is the AbilityDrop (mapped using its name "drop").
+6000 is the minimum cooldown, which is 5 minutes, and 12000 is the maximum cooldown, being 10 minutes.
+A random integer will be pulled between these two (6000-11999 ticks) and will be set as teh cooldown when you trigger the ability.
+For this specific ability, the first arg is the item/block name (using the format: "modID:itemName:metadata").
+For this ability, there are no other args.
+
+
+
+The following are the args of all default abilities, as well as each's name.
+Assume numerical numbers are integers unless specified.
+name - args (separates by commas)
+	drop - modid item mapping
+	summon - class path for summon entity , number of entities to spawn , the radius around the player in which the entities will spawn
+	explode - explosion radius (float)
+	teleport - the maximum distance for player to locate (cursor position)(double)
+	ejectLargeFireball - the maximum distance for player to locate (cursor position)(double) , explosion radius
+	ejectSmallFireball - the maximum distance for player to locate (cursor position)(double)
+	ejectSnowball - the maximum distance for player to locate (cursor position)(double)

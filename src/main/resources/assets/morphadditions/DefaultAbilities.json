@@ -1,0 +1,15 @@
+{
+  "net.minecraft": {
+    "net.minecraft.entity.passive.EntityChicken": "drop|6000,12000|minecraft:egg:0",
+    "net.minecraft.entity.passive.EntityWolf": "summon|12000,24000|net.minecraft.entity.passive.EntityWolf,3,7",
+    "net.minecraft.entity.monster.EntityZombie": "summon|12000,24000|net.minecraft.entity.monster.EntityZombie,6,7",
+    "net.minecraft.entity.monster.EntityPigZombie": "summon|12000,24000|net.minecraft.entity.monster.EntityPigZombie,6,7",
+    "net.minecraft.entity.monster.EntitySilverfish": "summon|1200,6000|net.minecraft.entity.monster.EntitySilverfish,5,3",
+    "net.minecraft.entity.passive.EntityVillager": "summon|6000,12000|net.minecraft.entity.monster.EntityIronGolem,1,4",
+    "net.minecraft.entity.monster.EntityCreeper": "explode|3F",
+    "net.minecraft.entity.monster.EntityEnderman": "teleport|1200,2400|300.0D",
+    "net.minecraft.entity.monster.EntityGhast": "ejectLargeFireball|60,200|64.0D,1",
+    "net.minecraft.entity.monster.EntityBlaze": "ejectSmallFireball|16.0D",
+    "net.minecraft.entity.monster.EntitySnowman": "ejectSnowball|16.0D"
+  }
+}
