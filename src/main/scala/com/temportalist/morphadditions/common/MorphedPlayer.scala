@@ -19,9 +19,10 @@ import net.minecraftforge.common.MinecraftForge
  */
 class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 
-	private val data: util.HashMap[String, NBTTagCompound] = new
-					util.HashMap[String, NBTTagCompound]()
-	private var cooldownTicks: Int = 0
+	private val data: util.HashMap[String, NBTTagCompound] =
+		new util.HashMap[String, NBTTagCompound]()
+	private var totalCoolDownTicks: Int = 0
+	private var coolDownTicks: Int = 0
 
 	def updateTag(key: String, newTag: NBTTagCompound): Unit = {
 		this.data.put(key, newTag)
@@ -42,39 +43,38 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		if (WorldHelper.isServer && this.canTrigger && !MinecraftForge.EVENT_BUS.post(
 					new MorphActionEvent(this.player, entity, ability))) {
 			ability.trigger(this.player)
-			this.cooldownTicks = ability.getCoolDown
-			//MorphAdditions.log("trigger: Ticks set to " + this.cooldownTicks)
-			this.syncCoolDown()
+			this.setCoolDownTicks(ability.getCoolDown)
 		}
 	}
 
 	def syncCoolDown(): Unit = {
 		//this.syncEntity("cooldown", this.cooldownTicks)
-		new PacketExtendedSync(this.getClass, "cooldown").add(this.cooldownTicks).sendToBoth()
+		new PacketExtendedSync(this.getClass, "cooldown").
+				add(this.coolDownTicks, this.totalCoolDownTicks).sendToBoth()
 	}
 
 	def canTrigger: Boolean = {
-		this.player.capabilities.isCreativeMode || this.cooldownTicks < 0
+		this.player.capabilities.isCreativeMode || this.coolDownTicks < 0
 	}
 
 	def tick(): Unit = {
 		//MorphAdditions.log("tick: Ticks at " + this.cooldownTicks)
-		if (this.cooldownTicks >= 0) {
-			this.cooldownTicks = if (this.player.capabilities.isCreativeMode) -1
-			else this.cooldownTicks - 1
+		if (this.coolDownTicks >= 0) {
+			this.coolDownTicks = if (this.player.capabilities.isCreativeMode) -1
+			else this.coolDownTicks - 1
 			//MorphAdditions.log("tick: Ticks set to " + this.cooldownTicks)
 			this.syncCoolDown()
 		}
 	}
 
 	def getCoolDown: Int = {
-		this.cooldownTicks
+		this.coolDownTicks
 	}
 
 	def getCoolDownTime: String = {
 		//this.printCooldown("")
-		val totalSeconds: Int = this.cooldownTicks / 20
-		val ticks: Int = this.cooldownTicks % 20
+		val totalSeconds: Int = this.coolDownTicks / 20
+		val ticks: Int = this.coolDownTicks % 20
 		val minutes: Int = totalSeconds / 60
 		val seconds: Int = totalSeconds % 60
 
@@ -92,11 +92,13 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		minutes + ":" + seconds_str + ":" + ticks_str
 	}
 
+	def getTotalCoolDownTicks: Int = this.totalCoolDownTicks
+
 	def clearCoolDown(): Unit = this.setCoolDownTicks(-1)
 
 	def setCoolDownTicks(amt: Int): Unit = {
-		this.cooldownTicks = amt
-
+		this.coolDownTicks = amt
+		this.totalCoolDownTicks = amt
 		this.syncCoolDown()
 	}
 
@@ -113,7 +115,8 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		tagCom.setTag("morphedPlayerTag", morphedTagList)
 
 		//this.printCooldown("saving ticks")
-		tagCom.setInteger("cool_down", this.cooldownTicks)
+		tagCom.setInteger("cool_down", this.coolDownTicks)
+		tagCom.setInteger("cool_down_total", this.totalCoolDownTicks)
 
 	}
 
@@ -125,7 +128,8 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 			this.data.put(tag.getString("key"), tag.getCompoundTag("value"))
 		}
 
-		this.cooldownTicks = tagCom.getInteger("cool_down")
+		this.coolDownTicks = tagCom.getInteger("cool_down")
+		this.totalCoolDownTicks = tagCom.getInteger("cool_down_total")
 		//this.printCooldown("loaded ticks")
 
 	}
@@ -135,7 +139,8 @@ class MorphedPlayer(player: EntityPlayer) extends ExtendedEntity(player) {
 		uniqueIdentifier match {
 			case "cooldown" =>
 				val passedTicks = packet.get[Int]
-				this.cooldownTicks = passedTicks
+				this.coolDownTicks = passedTicks
+				this.totalCoolDownTicks = packet.get[Int]
 			case _ =>
 		}
 	}

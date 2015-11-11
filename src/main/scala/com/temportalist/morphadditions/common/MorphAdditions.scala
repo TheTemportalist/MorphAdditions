@@ -1,6 +1,7 @@
 package com.temportalist.morphadditions.common
 
 import com.temportalist.morphadditions.addon.Morph
+import com.temportalist.morphadditions.common.init.Abilities
 import com.temportalist.morphadditions.common.network.PacketKeyPressed
 import com.temportalist.morphadditions.waila.Waila
 import com.temportalist.origin.api.common.resource.{EnumResource, IModDetails, IModResource}
@@ -20,7 +21,7 @@ import cpw.mods.fml.common.{Mod, SidedProxy}
 @Mod(modid = MorphAdditions.modid, name = MorphAdditions.modname, version = MorphAdditions.version,
 	guiFactory = MorphAdditions.clientProxy,
 	modLanguage = "scala",
-	dependencies = "required-after:Morph@[0.9,);required-after:origin@[6,);after:Waila@[1,);"
+	dependencies = "required-after:Morph@[0.9,);"//required-after:origin@[6,);after:Waila@[1,);"
 )
 object MorphAdditions extends IMod with IModResource {
 
@@ -56,6 +57,7 @@ object MorphAdditions extends IMod with IModResource {
 	@Mod.EventHandler
 	def init(event: FMLInitializationEvent): Unit = {
 		super.initialize(event, this.proxy)
+		Abilities.register()
 
 	}
 
@@ -64,6 +66,7 @@ object MorphAdditions extends IMod with IModResource {
 		super.postInitialize(event, this.proxy)
 		Morph.register()
 		Waila.post()
+		MAOptions.postInitAbilities()
 
 		this.loadResource("actionMan", (EnumResource.GUI, "running_man-256.png"))
 		this.loadResource("actionManOutline", (EnumResource.GUI, "running_man_outline.png"))

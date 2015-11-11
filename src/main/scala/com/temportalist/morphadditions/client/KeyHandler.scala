@@ -3,6 +3,7 @@ package com.temportalist.morphadditions.client
 import com.temportalist.morphadditions.common.network.PacketKeyPressed
 import com.temportalist.morphadditions.common.{MAOptions, MorphAdditions, MorphedPlayer}
 import com.temportalist.origin.api.client.utility.Rendering
+import com.temportalist.origin.api.common.resource.IModDetails
 import com.temportalist.origin.foundation.client.{EnumKeyCategory, IKeyBinder}
 import cpw.mods.fml.common.ObfuscationReflectionHelper
 import cpw.mods.fml.relauncher.{Side, SideOnly}
@@ -18,9 +19,10 @@ import org.lwjgl.input.Keyboard
 @SideOnly(Side.CLIENT)
 object KeyHandler extends IKeyBinder {
 
+	override def getMod: IModDetails = MorphAdditions
+
 	val trigger = this.makeKeyBinding(
 		"key.triggerMorphAbility.name", Keyboard.KEY_L, EnumKeyCategory.GAMEPLAY)
-	Api.registerMod(MorphAdditions.getModName, this.trigger.getKeyDescription)
 
 	override def onKeyPressed(keyBinding: KeyBinding): Unit = {
 		keyBinding match {

@@ -46,6 +46,19 @@ object HUDOverlay {//} extends Gui {
 			val x1: Int = width / 4 + 15 - Rendering.mc.fontRenderer.getStringWidth(timeLeft) - 2
 			val y1: Int = height - 37
 			Rendering.mc.fontRenderer.drawString(timeLeft, x1, y1, 0x000000)
+
+			val iconSize = 16
+			Rendering.bindResource(MorphAdditions.getResource("actionManOutline"))
+			Rendering.drawTextureWithSizes((x1, y1 + 15), (0, 0), (256, 256), (iconSize, iconSize), (256, 256))
+
+			val percentDoneInDecimal: Double =
+				(mPlayer.getTotalCoolDownTicks - mPlayer.getCoolDown) / mPlayer.getTotalCoolDownTicks
+			val iconPercentDone = (iconSize * percentDoneInDecimal).toInt
+			val iconSizeHidden = iconSize - iconPercentDone
+			Rendering.bindResource(MorphAdditions.getResource("actionMan"))
+			Rendering.drawTextureWithSizes((x1, y1 + 15 + iconSizeHidden),
+				(0, iconSizeHidden), (256, 256), (iconSize, iconPercentDone), (256, 256))
+
 			Gl.pop()
 		}
 	}

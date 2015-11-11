@@ -19,7 +19,7 @@ object Abilities {
 	private val entityToAbility: util.HashMap[Class[_ <: EntityLivingBase], AbilityAction] = new
 					util.HashMap[Class[_ <: EntityLivingBase], AbilityAction]()
 
-	{
+	def register(): Unit = {
 		/*
 		bat
 		cat
